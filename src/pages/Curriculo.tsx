@@ -1,19 +1,47 @@
 
 import Header from '@/components/Header';
+import { Button } from '@/components/ui/button';
+import { Download } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 
 const Curriculo = () => {
+  const handleDownloadPDF = () => {
+    const element = document.getElementById('curriculo-content');
+    const opt = {
+      margin: 1,
+      filename: 'curriculo.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    
+    html2pdf().set(opt).from(element).save();
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       <Header />
       
       <main className="pt-24 pb-12">
         <div className="container mx-auto px-6">
-          <h1 className="text-5xl font-bold text-green-400 mb-12 text-center">
-            Currículo
-          </h1>
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-12">
+            <h1 className="text-4xl sm:text-5xl font-bold text-green-400 mb-6 sm:mb-0 text-center sm:text-left">
+              Currículo
+            </h1>
+            <Button 
+              onClick={handleDownloadPDF}
+              className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors"
+            >
+              <Download size={20} />
+              Baixar PDF
+            </Button>
+          </div>
           
           <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8">
+            <div 
+              id="curriculo-content"
+              className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8"
+            >
               
               {/* Experiência */}
               <section className="mb-12">
