@@ -15,9 +15,9 @@ const Index = () => {
         <ProjectCarousel />
       </main>
       
-      <footer className="bg-black/50 backdrop-blur-sm border-t border-green-400/20 py-8">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-gray-400">
+      <footer className="bg-black/50 backdrop-blur-sm border-t border-green-400/20 py-6 sm:py-8">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
+          <p className="text-gray-400 text-sm sm:text-base">
             © 2024 Portfólio. Desenvolvido com ❤️ e tecnologia.
           </p>
         </div>
