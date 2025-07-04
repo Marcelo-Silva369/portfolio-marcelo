@@ -8,31 +8,31 @@ const ProjectCarousel = () => {
     {
       title: 'Formulário',
       description: 'Sistema de cadastro completo',
-      image: '/placeholder.svg',
+      image: '/images/formulario.png',
       tech: ['HTML', 'CSS', 'JavaScript']
     },
     {
       title: 'Jogo-P-P-T',
       description: 'Jogo de Pedra, Papel e Tesoura',
-      image: '/placeholder.svg',
+      image: '/images/jogo-pedra-papel-tesoura.png',
       tech: ['JavaScript', 'CSS', 'HTML']
     },
     {
       title: 'Site-Pokédex',
       description: 'Catálogo completo de Pokémons',
-      image: '/placeholder.svg',
+      image: '/images/pokedex.png',
       tech: ['React', 'API', 'CSS']
     },
     {
       title: 'List-Supermercado',
       description: 'Lista de compras interativa',
-      image: '/placeholder.svg',
+      image: '/images/list-supermercado.png',
       tech: ['JavaScript', 'LocalStorage']
     },
     {
       title: 'LandingPage-Hotel',
       description: 'Site promocional para hotel',
-      image: '/placeholder.svg',
+      image: '/images/landingpage-hotel.png',
       tech: ['HTML', 'CSS', 'JavaScript']
     }
   ];
