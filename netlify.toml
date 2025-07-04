@@ -1,18 +1,20 @@
 [build]
-  command = "npm run build"
+  command = "npm install && npm run build"
   publish = "dist"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18.18.2"
-  NPM_FLAGS = "--version"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+  NPM_FLAGS = "--legacy-peer-deps"
+  CI = "false"
 
 [dev]
-  framework = "#custom"
   command = "npm run dev"
-  targetPort = 5173
-  port = 8888
+  port = 5173
   publish = "dist"
-  autoLaunch = false
+  targetPort = 5173
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
