@@ -16,8 +16,22 @@ const Perfil = () => {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="md:col-span-1">
                 <div className="bg-gradient-to-br from-green-400/10 to-blue-400/10 backdrop-blur-sm border border-green-400/20 rounded-2xl p-6">
-                  <div className="w-48 h-48 mx-auto bg-gradient-to-br from-green-400 to-blue-400 rounded-full mb-6"></div>
-                  <h2 className="text-2xl font-bold text-white text-center mb-2">
+                  <div className="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-green-400 to-blue-400 mb-6 overflow-hidden">
+                    <img 
+                      src="/images/LogoCurriculo.png" 
+                      alt="Sua Foto" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // Se a imagem não carregar, mostra apenas o gradiente
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                  <h1 className="text-2xl font-bold text-white text-center mb-2">
+                    Marcelo Silva
+                  </h1>
+                  <h2 className="text-2xl font-bold text-green-400 text-center mb-2">
                     Desenvolvedor Full Stack
                   </h2>
                   <p className="text-gray-300 text-center">
@@ -30,7 +44,7 @@ const Perfil = () => {
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8">
                   <h3 className="text-3xl font-bold text-white mb-6">Sobre Mim</h3>
                   <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                    Sou um desenvolvedor apaixonado por criar soluções digitais inovadoras. 
+                    Olá, me chamo Marcelo, sou um desenvolvedor apaixonado por criar soluções digitais inovadoras. 
                     Com experiência em desenvolvimento front-end e back-end, busco sempre 
                     entregar projetos de alta qualidade que ofereçam excelente experiência 
                     ao usuário.
