@@ -1,63 +1,110 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const ProjectCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const minSwipeDistance = 50; // Distância mínima em pixels para considerar um swipe
 
   const projects = [
     {
       title: 'Formulário',
       description: 'Sistema de cadastro completo',
       image: '/images/formulario.png',
-      tech: ['HTML', 'CSS', 'JavaScript']
+      tech: ['HTML', 'CSS'],
+      url: 'https://marcelo-silva369.github.io/Formulario/' // Adicione a URL do projeto
     },
     {
       title: 'Jogo-P-P-T',
       description: 'Jogo de Pedra, Papel e Tesoura',
       image: '/images/jogo-pedra-papel-tesoura.png',
-      tech: ['JavaScript', 'CSS', 'HTML']
+      tech: ['HTML', 'CSS', 'JavaScript'],
+      url: 'https://marcelo-silva369.github.io/Jogo-pedra-papel-tesoura/' // Adicione a URL do projeto
     },
     {
       title: 'Site-Pokédex',
       description: 'Catálogo completo de Pokémons',
       image: '/images/pokedex.png',
-      tech: ['React', 'API', 'CSS']
+      tech: ['HTML', 'CSS', 'JavaScript', 'API'],
+      url: 'https://marcelo-silva369.github.io/pokedex/' // Adicione a URL do projeto
     },
     {
       title: 'List-Supermercado',
       description: 'Lista de compras interativa',
       image: '/images/list-supermercado.png',
-      tech: ['JavaScript', 'LocalStorage']
+      tech: ['HTML', 'CSS', 'JavaScript'],
+      url: 'https://marcelo-silva369.github.io/lista-supermercado/' // Adicione a URL do projeto
     },
     {
       title: 'LandingPage-Hotel',
       description: 'Site promocional para hotel',
       image: '/images/landingpage-hotel.png',
-      tech: ['HTML', 'CSS', 'JavaScript']
+      tech: ['HTML', 'CSS'],
+      url: 'https://marcelo-silva369.github.io/landing-page-hotel/' // Adicione a URL do projeto
     }
   ];
 
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === projects.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
+    );
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === projects.length - 1 ? 0 : prevIndex + 1
-      );
+      nextSlide();
     }, 4000);
 
     return () => clearInterval(interval);
   }, [projects.length]);
 
+  // Funções para manipulação de toque
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
   return (
-    <section className="py-16 sm:py-20 bg-gradient-to-b from-black/30 to-transparent">
+    <section className="pb-16 sm:pb-20 bg-gradient-to-b from-black/30 to-transparent">
       <div className="container mx-auto px-4 sm:px-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-8 sm:mb-12">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-4 sm:mb-6">
           Projetos
         </h2>
         
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-black/50 to-transparent backdrop-blur-sm border border-green-400/20">
           <div 
-            className="flex transition-transform duration-1000 ease-in-out"
+            ref={carouselRef}
+            className="flex transition-transform duration-1000 ease-in-out touch-none"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {projects.map((project, index) => (
               <div 
@@ -82,12 +129,17 @@ const ProjectCarousel = () => {
                         </span>
                       ))}
                     </div>
-                    <button className="px-6 sm:px-8 py-3 bg-gradient-to-r from-green-400 to-green-500 text-black font-semibold rounded-lg hover:from-green-300 hover:to-green-400 transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                    <a 
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block px-6 sm:px-8 py-3 bg-gradient-to-r from-green-400 to-green-500 text-black font-semibold rounded-lg hover:from-green-300 hover:to-green-400 transition-all duration-300 hover:scale-105 text-sm sm:text-base"
+                    >
                       Ver Projeto
-                    </button>
+                    </a>
                   </div>
                   
-                  <div className="order-1 md:order-2">
+                  <div className="order-1 md:order-2 touch-auto">
                     <div className="bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm border border-white/10">
                       <img 
                         src={project.image} 
@@ -101,20 +153,22 @@ const ProjectCarousel = () => {
             ))}
           </div>
           
-          {/* Navigation Dots */}
-          <div className="flex justify-center space-x-2 sm:space-x-3 py-4 sm:py-6">
-            {projects.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? 'bg-green-400 scale-125'
-                    : 'bg-gray-600 hover:bg-gray-400'
-                }`}
-              />
-            ))}
-          </div>
+        </div>
+        
+        {/* Única linha de indicadores */}
+        <div className="flex justify-center mt-6 space-x-2">
+          {projects.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-2.5 rounded-full transition-all ${
+                index === currentIndex 
+                  ? 'bg-green-400 w-8' 
+                  : 'bg-gray-600 w-2.5 hover:bg-gray-400'
+              }`}
+              aria-label={`Ir para o projeto ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
