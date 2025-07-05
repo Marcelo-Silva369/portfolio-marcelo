@@ -32,7 +32,7 @@ const Perfil = () => {
                     Marcelo Silva
                   </h1>
                   <h2 className="text-2xl font-bold text-green-400 text-center mb-2">
-                    Desenvolvedor Full Stack
+                    Desenvolvedor Front-end
                   </h2>
                   <p className="text-gray-300 text-center">
                     Apaixonado por tecnologia e inovação
