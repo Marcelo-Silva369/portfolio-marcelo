@@ -38,6 +38,12 @@ const Hero = () => {
             <div className="px-4 sm:px-5 py-2 bg-purple-400/20 border border-purple-400/50 rounded-lg backdrop-blur-sm">
               <span className="text-purple-300 font-semibold text-sm sm:text-base">Node.js</span>
             </div>
+            <div className="px-4 sm:px-5 py-2 bg-blue-500/20 border border-blue-500/50 rounded-lg backdrop-blur-sm">
+              <span className="text-blue-400 font-semibold text-sm sm:text-base">Python</span>
+            </div>
+            <div className="px-4 sm:px-5 py-2 bg-green-700/20 border border-green-700/50 rounded-lg backdrop-blur-sm">
+              <span className="text-green-600 font-semibold text-sm sm:text-base">Excel</span>
+            </div>
           </div>
         </div>
       </div>

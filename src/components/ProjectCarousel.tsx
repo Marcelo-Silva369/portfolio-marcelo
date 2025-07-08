@@ -43,6 +43,27 @@ const ProjectCarousel = () => {
       image: '/images/landingpage-hotel.png',
       tech: ['HTML', 'CSS'],
       url: 'https://marcelo-silva369.github.io/landing-page-hotel/' // Adicione a URL do projeto
+    },
+    {
+      title: 'Cadastro de Produtos',
+      description: 'Automação de cadastro de produtos usando o Pandas do Python',
+      image: '/images/automacao-python.png',
+      tech: ['Python'],
+      url: 'https://youtu.be/obEeJ5uBzvY?si=EWd61LqyqdN5CDKx' // Adicione a URL do projeto
+    },
+    {
+      title: 'Dashboard de Vendas',
+      description: 'Análise de dados de vendas e faturamento mensal, trimestral e anual',
+      image: '/images/dashboard-vendas.png',
+      tech: ['Excel'],
+      url: 'https://youtu.be/ubc12N9-EwE?si=JI3u5Cwoi-HlobVb' // Adicione a URL do projeto
+    },
+    {
+      title: 'Dashboard Hawking',
+      description: 'Análise de dados de vendedores com hawking mensal e anual',
+      image: '/images/dashboard-Hawking-vendas.png',
+      tech: ['Excel'],
+      url: 'https://youtu.be/bILNUs9thoE?si=aBSDt9CegQNUnb08' // Adicione a URL do projeto
     }
   ];
 
@@ -61,7 +82,7 @@ const ProjectCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [projects.length]);
