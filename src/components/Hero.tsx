@@ -10,11 +10,11 @@ const Hero = () => {
 
       <div className="text-center z-10 max-w-4xl mx-auto">
         <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-green-300 to-yellow-400 mb-6 sm:mb-8 animate-fade-in">
-          Portfólio
+          Shark Dev
         </h1>
         
         <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-4 sm:mb-6 animate-fade-in delay-500 px-4">
-          Desenvolvedor Front-end apaixonado por criar experiências digitais incríveis
+          Olá! Eu sou Marcelo, um Desenvolvedor Front-end apaixonado por criar experiências digitais incríveis
         </p>
         
         <div className="animate-fade-in delay-1000">
@@ -25,6 +25,9 @@ const Hero = () => {
             </div>
             <div className="px-4 sm:px-5 py-2 bg-blue-500/20 border border-blue-500/50 rounded-lg backdrop-blur-sm">
               <span className="text-blue-400 font-semibold text-sm sm:text-base">CSS</span>
+            </div>
+            <div className="px-4 sm:px-5 py-2 bg-blue-800/20 border border-blue-300/50 rounded-lg backdrop-blur-sm">
+              <span className="text-blue-300 font-semibold text-sm sm:text-base">Tailwind</span>
             </div>
             <div className="px-4 sm:px-5 py-2 bg-yellow-400/20 border border-yellow-400/50 rounded-lg backdrop-blur-sm">
               <span className="text-yellow-400 font-semibold text-sm sm:text-base">JavaScript</span>

@@ -64,6 +64,13 @@ const ProjectCarousel = () => {
       image: '/images/dashboard-Hawking-vendas.png',
       tech: ['Excel'],
       url: 'https://youtu.be/bILNUs9thoE?si=aBSDt9CegQNUnb08' // Adicione a URL do projeto
+    },
+    {
+      title: 'Clone do Instagram',
+      description: 'Clone da tela de login do Instagram sem backend',
+      image: '/images/insta-clone.png',
+      tech: ['HTML', 'Tailwind CSS', 'JavaScript', 'React', 'Node.js'],
+      url: 'https://instaclone-369.netlify.app/' // Adicione a URL do projeto
     }
   ];
 
