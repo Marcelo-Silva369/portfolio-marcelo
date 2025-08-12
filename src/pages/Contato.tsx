@@ -121,7 +121,7 @@ const Contato = () => {
                   <Instagram className="w-5 h-5 text-white group-hover:text-pink-500 transition-colors" />
                 </a>
                 <a
-                  href="https://youtube.com/@marcelotubarao-xi2ej?si=AT9zZMtci98-klqF"
+                  href="https://www.youtube.com/@SharkDev-369"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-gray-700 hover:bg-red-500/20 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110 group"

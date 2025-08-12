@@ -93,7 +93,7 @@ const Perfil = () => {
                         Frontend
                       </h5>
                       <p className="text-gray-300 text-sm">
-                        HTML, CSS, JavaScript, React, TypeScript
+                        HTML, CSS, Tailwind Css, JavaScript, React
                       </p>
                     </div>
                     <div className="bg-blue-400/20 border border-blue-400/50 rounded-lg p-4">
@@ -101,7 +101,7 @@ const Perfil = () => {
                         Backend
                       </h5>
                       <p className="text-gray-300 text-sm">
-                        Node.js, Express, MongoDB, Python, Django, IA
+                        Node.js, Express, MongoDB, Python, IA
                       </p>
                     </div>
                   </div>
