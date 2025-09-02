@@ -58,6 +58,14 @@ const Certificados = () => {
       level: 'Iniciante',
       image: '/images/Certificado-Logica-Programacao.png',
       pdf: '/pdfs/Certificado logica de programção.pdf' // Caminho para o PDF
+    },
+    {
+      title: 'Lógica de Programação(PHP-JavaScript)',
+      institution: 'Danki Code',
+      date: '2025',
+      level: 'Iniciante',
+      image: '/images/Logica de programação (PHP - JavaScript).png',
+      pdf: '/pdfs/Curso logica de programação - foco PHP-JAVASICRIPT.pdf' // Caminho para o PDF
     }
   ];
 

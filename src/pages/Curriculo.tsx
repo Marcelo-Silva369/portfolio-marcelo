@@ -35,38 +35,6 @@ const Curriculo = () => {
           {/* Currículo sem foto */}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-16 gap-8">
             <h1 className="text-3xl sm:text-4xl font-bold text-green-400 text-center sm:text-left">
-              Currículo Sem Foto
-            </h1>
-            <Button
-              onClick={handleDownloadPDFSemFoto}
-              className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg flex items-center gap-2 transition-colors text-lg"
-            >
-              <Download size={20} />
-              Baixar PDF
-            </Button>
-          </div>
-
-          <div className="max-w-4xl mx-auto mb-16">
-            <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
-              <div className="w-full">
-                <img
-                  src="/images/Currículo sem foto.png"
-                  alt="Prévia do Currículo Sem Foto"
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-
-            <div className="mt-8 text-center">
-              <p className="text-gray-300 mb-6">
-                Clique no botão acima para baixar o currículo sem foto em PDF
-              </p>
-            </div>
-          </div>
-
-          {/* Currículo com foto */}
-          <div className="flex flex-col sm:flex-row justify-between items-center mb-16 gap-8">
-            <h1 className="text-3xl sm:text-4xl font-bold text-green-400 text-center sm:text-left">
               Currículo Com Foto
             </h1>
             <Button
@@ -78,7 +46,7 @@ const Curriculo = () => {
             </Button>
           </div>
 
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto mb-16">
             <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
               <div className="w-full">
                 <img
@@ -92,6 +60,38 @@ const Curriculo = () => {
             <div className="mt-8 text-center">
               <p className="text-gray-300 mb-6">
                 Clique no botão acima para baixar o currículo com foto em PDF
+              </p>
+            </div>
+          </div>
+
+          {/* Currículo com foto */}
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-16 gap-8">
+            <h1 className="text-3xl sm:text-4xl font-bold text-green-400 text-center sm:text-left">
+              Currículo Sem Foto
+            </h1>
+            <Button
+              onClick={handleDownloadPDFSemFoto}
+              className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg flex items-center gap-2 transition-colors text-lg"
+            >
+              <Download size={20} />
+              Baixar PDF
+            </Button>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
+              <div className="w-full">
+                <img
+                  src="/images/Currículo sem foto.png"
+                  alt="Prévia do Currículo Sem Foto"
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+
+            <div className="mt-8 text-center">
+              <p className="text-gray-300 mb-6">
+                Clique no botão acima para baixar o currículo sem foto em PDF
               </p>
             </div>
           </div>
