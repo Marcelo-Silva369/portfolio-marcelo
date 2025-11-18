@@ -32,7 +32,7 @@ const Contato = () => {
             <div className="space-y-6">
               <div className="flex items-center space-x-4">
                 <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=mntprogramador369@gmail.com"
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=sharkdev369@gmail.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 sm:w-12 h-10 sm:h-12 bg-red-400/20 hover:bg-yellow-400/30 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 transform hover:scale-110 group"
@@ -43,7 +43,7 @@ const Contato = () => {
                   <p className="text-gray-400 text-sm">Email</p>
 
                   <p className="text-white font-semibold text-sm sm:text-base">
-                    mntprogramador369@gmail.com
+                    sharkdev369@gmail.com
                   </p>
                 </div>
               </div>
@@ -112,7 +112,7 @@ const Contato = () => {
                   <Linkedin className="w-5 h-5 text-white group-hover:text-blue-400 transition-colors" />
                 </a>
                 <a
-                  href="https://www.instagram.com/shark_dev_369/profilecard/?igsh=MW9jcDZyeWQxdnZxbQ=="
+                  href="https://www.instagram.com/shark.dev_369/profilecard/?igsh=MW9jcDZyeWQxdnZxbQ=="
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-gray-700 hover:bg-pink-500/20 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110 group"
