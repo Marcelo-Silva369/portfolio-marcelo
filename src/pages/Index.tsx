@@ -2,10 +2,12 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import ProjectCarousel from '@/components/ProjectCarousel';
+import PageTransition from '@/components/PageTransition';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <PageTransition>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       <Header />
       
       <main>
@@ -24,6 +26,7 @@ const Index = () => {
         </div>
       </footer>
     </div>
+    </PageTransition>
   );
 };
 

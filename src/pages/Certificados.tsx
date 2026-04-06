@@ -1,7 +1,11 @@
-
 import Header from '@/components/Header';
+import PageTransition from '@/components/PageTransition';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import AnimatedTitle from '@/components/AnimatedTitle';
 
 const Certificados = () => {
+  const [activeCard, setActiveCard] = useState<number | null>(null);
   const certificates = [
     {
       title: 'Frontend Completo',
@@ -9,7 +13,7 @@ const Certificados = () => {
       date: '2025',
       level: 'Avançado',
       image: '/images/Certificado-Front-End-Completo-2.0.png',
-      pdf: '/pdfs/Curso de Front-End Completo 2.0.pdf' // Caminho para o PDF
+      pdf: '/pdfs/Curso de Front-End Completo 2.0.pdf'
     },
     {
       title: 'JavaScript Completo',
@@ -17,7 +21,7 @@ const Certificados = () => {
       date: '2025',
       level: 'Avançado',
       image: '/images/Certificado-JavaScript.png',
-      pdf: '/pdfs/Curso JavaScript Completo.pdf' // Caminho para o PDF
+      pdf: '/pdfs/Curso JavaScript Completo.pdf'
     },
     {
       title: 'Python Impressionador',
@@ -25,7 +29,7 @@ const Certificados = () => {
       date: '2025',
       level: 'Avançado',
       image: '/images/Certificado-Python-Impressionador.png',
-      pdf: '/pdfs/Python Impressionador - Marcelo Erinaldo Da Silva.pdf' // Caminho para o PDF
+      pdf: '/pdfs/Python Impressionador - Marcelo Erinaldo Da Silva.pdf'
     },
     {
       title: 'IA Impressionador',
@@ -33,7 +37,7 @@ const Certificados = () => {
       date: '2024',
       level: 'Avançado',
       image: '/images/Certificado-IA-Impressionador.png',
-      pdf: '/pdfs/Inteligência Artificial Impressionador - Marcelo Erinaldo Da Silva.pdf' // Caminho para o PDF
+      pdf: '/pdfs/Inteligência Artificial Impressionador - Marcelo Erinaldo Da Silva.pdf'
     },
     {
       title: 'Excel Impressionador',
@@ -41,7 +45,7 @@ const Certificados = () => {
       date: '2024',
       level: 'Avançado',
       image: '/images/Certificado-Excel-Impressionador.png',
-      pdf: '/pdfs/Excel Impressionador - Marcelo Erinaldo Da Silva.pdf' // Caminho para o PDF
+      pdf: '/pdfs/Excel Impressionador - Marcelo Erinaldo Da Silva.pdf'
     },
     {
       title: 'Auxiliar Administrativo',
@@ -49,7 +53,7 @@ const Certificados = () => {
       date: '2024',
       level: 'Avançado',
       image: '/images/Certificado-Administracao.png',
-      pdf: '/pdfs/Certificado.pdf' // Caminho para o PDF
+      pdf: '/pdfs/Certificado.pdf'
     },
     {
       title: 'Lógica de Programação em Python',
@@ -57,71 +61,117 @@ const Certificados = () => {
       date: '2024',
       level: 'Iniciante',
       image: '/images/Certificado-Logica-Programacao.png',
-      pdf: '/pdfs/Certificado logica de programção.pdf' // Caminho para o PDF
+      pdf: '/pdfs/Certificado logica de programção.pdf'
     },
     {
-      title: 'Lógica de Programação(PHP-JavaScript)',
+      title: 'Lógica de Programação (PHP/JS)',
       institution: 'Danki Code',
       date: '2025',
       level: 'Iniciante',
       image: '/images/Logica de programação (PHP - JavaScript).png',
-      pdf: '/pdfs/Curso logica de programação - foco PHP-JAVASICRIPT.pdf' // Caminho para o PDF
+      pdf: '/pdfs/Curso logica de programação - foco PHP-JAVASICRIPT.pdf'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
-      <Header />
+    <PageTransition>
+      <div 
+        className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border-t border-blue-500/10"
+        onClick={() => setActiveCard(null)}
+      >
+        <Header />
       
-      <main className="pt-24 pb-12">
-        <div className="container mx-auto px-6">
-          <h1 className="text-5xl font-bold text-green-400 mb-12 text-center">
-            Certificados
-          </h1>
+        <main className="pt-24 pb-20 container mx-auto px-6 relative z-10">
+          <AnimatedTitle text="CERTIFICADOS" />
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10" style={{ perspective: 2000 }}>
             {certificates.map((cert, index) => (
-              <div 
+              <motion.div 
                 key={index}
-                className="bg-gradient-to-br from-green-400/10 to-blue-400/10 backdrop-blur-sm border border-green-400/20 rounded-2xl p-6 hover:scale-105 transition-transform duration-300"
+                initial={{ opacity: 0, z: -300, rotateY: 45 }}
+                whileInView={{ opacity: 1, z: 0, rotateY: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1, type: "spring" }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  rotateY: 0, // Simplifying to scale-only on mobile for stability, or could use more complex logic
+                  rotateX: 5, 
+                  z: 50,
+                  transition: { delay: 0, duration: 0.3 }
+                }}
+                className="relative overflow-hidden rounded-3xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] cursor-pointer transform-gpu group border border-transparent"
+                style={{ transformStyle: 'preserve-3d' }}
+                onClick={() => setActiveCard(activeCard === index ? null : index)}
               >
+                {/* CLIPPED BEAM LAYER */}
+                <div className="absolute inset-0 pointer-events-none" style={{ transform: "translateZ(0px)" }}>
+                  <div className="absolute top-1/2 left-1/2 w-[1200px] h-[1200px]" style={{ transform: 'translate(-50%, -50%)' }}>
+                    <motion.div
+                      animate={{ rotate: [0, index % 2 === 0 ? 360 : -360] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                      className="w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: `conic-gradient(from 0deg, transparent 70%, #3b82f6 100%)` }}
+                    />
+                  </div>
+                </div>
+
                 <div 
-                  className="h-48 rounded-lg mb-4 overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                  onClick={() => window.open(cert.pdf, '_blank', 'noopener,noreferrer')}
-                  title="Clique para visualizar o certificado"
-                >
-                  <div className="relative w-full h-full group">
+                  className="absolute inset-[2px] bg-gradient-to-br from-[#000000] via-slate-950 to-[#020617] backdrop-blur-3xl rounded-[22px]"
+                  style={{ transformStyle: 'preserve-3d', transform: 'translateZ(1px)' }}
+                ></div>
+
+                {/* CONTENT LAYER */}
+                <div className="relative p-4 sm:p-6 flex flex-col h-full" style={{ transformStyle: 'preserve-3d' }}>
+                  <div 
+                    className="h-40 sm:h-48 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 flex overflow-hidden relative shadow-inner group/img border border-blue-800/40"
+                    style={{ transform: "translateZ(30px)" }}
+                  >
                     <img 
                       src={cert.image} 
                       alt={`Certificado de ${cert.title}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-500"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.onerror = null;
-                        target.src = 'https://via.placeholder.com/300x200/1a1a2e/00ff9d?text=Certificado';
+                        target.src = 'https://via.placeholder.com/300x200/0f172a/3b82f6?text=Carregando';
                       }}
                     />
-                    <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="text-white font-semibold bg-green-500 px-4 py-2 rounded-lg">
-                        Ver Certificado
+                    <div 
+                      className={`absolute inset-0 bg-black/70 flex items-center justify-center transition-all duration-300 backdrop-blur-sm z-20 ${activeCard === index ? 'opacity-100 pointer-events-auto' : 'opacity-0 group-hover/img:opacity-100 pointer-events-none group-hover/img:pointer-events-auto'}`}
+                      onClick={(e) => e.stopPropagation()} // Previne que o clique no overlay feche o card imediatamente
+                    >
+                      <motion.span 
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(cert.pdf, '_blank', 'noopener,noreferrer');
+                        }}
+                        className="text-white font-bold bg-blue-600 px-6 py-3 rounded-xl shadow-[0_0_15px_#3b82f6] cursor-pointer"
+                      >
+                        Visualizar PDF
+                      </motion.span>
+                    </div>
+                  </div>
+                  
+                  <div style={{ transform: "translateZ(40px)" }}>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 leading-tight">{cert.title}</h3>
+                    <p className="text-sm sm:text-base text-blue-300 mb-4 font-medium">{cert.institution}</p>
+                    
+                    <div className="flex justify-between items-center pt-4 border-t border-blue-500/20 mt-auto gap-2">
+                      <span className="text-cyan-400 font-bold text-base sm:text-lg">{cert.date}</span>
+                      <span className="px-3 py-0.5 sm:px-4 sm:py-1 bg-blue-500/20 border border-blue-500/50 rounded-full text-blue-100 text-xs sm:text-sm font-semibold shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+                        {cert.level}
                       </span>
                     </div>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{cert.title}</h3>
-                <p className="text-gray-300 mb-2">{cert.institution}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-green-400 font-semibold">{cert.date}</span>
-                  <span className="px-3 py-1 bg-green-400/20 border border-green-400/50 rounded-full text-green-400 text-sm">
-                    {cert.level}
-                  </span>
-                </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </PageTransition>
   );
 };
 

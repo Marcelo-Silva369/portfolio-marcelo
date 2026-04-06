@@ -1,200 +1,220 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 
-import { useState, useEffect, useRef } from 'react';
+const projects = [
+  {
+    title: 'Formulário',
+    description: 'Sistema de cadastro completo',
+    image: '/images/formulario.png',
+    tech: ['HTML', 'CSS'],
+    url: 'https://marcelo-silva369.github.io/Formulario/'
+  },
+  {
+    title: 'Jogo-P-P-T',
+    description: 'Jogo de Pedra, Papel e Tesoura',
+    image: '/images/jogo-pedra-papel-tesoura.png',
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    url: 'https://marcelo-silva369.github.io/Jogo-pedra-papel-tesoura/'
+  },
+  {
+    title: 'Site-Pokédex',
+    description: 'Catálogo completo de Pokémons',
+    image: '/images/pokedex.png',
+    tech: ['HTML', 'CSS', 'JavaScript', 'API'],
+    url: 'https://marcelo-silva369.github.io/pokedex/'
+  },
+  {
+    title: 'List-Supermercado',
+    description: 'Lista de compras interativa',
+    image: '/images/list-supermercado.png',
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    url: 'https://marcelo-silva369.github.io/lista-supermercado/'
+  },
+  {
+    title: 'LandingPage-Hotel',
+    description: 'Site promocional para hotel',
+    image: '/images/landingpage-hotel.png',
+    tech: ['HTML', 'CSS'],
+    url: 'https://marcelo-silva369.github.io/landing-page-hotel/'
+  },
+  {
+    title: 'Cadastro de Produtos',
+    description: 'Automação usando Python',
+    image: '/images/automacao-python.png',
+    tech: ['Python'],
+    url: 'https://youtu.be/obEeJ5uBzvY?si=EWd61LqyqdN5CDKx'
+  },
+  {
+    title: 'Dashboard de Vendas',
+    description: 'Análise de vendas mensais',
+    image: '/images/dashboard-vendas.png',
+    tech: ['Excel'],
+    url: 'https://youtu.be/ubc12N9-EwE?si=JI3u5Cwoi-HlobVb'
+  },
+  {
+    title: 'Clone do Instagram',
+    description: 'Clone da tela de login',
+    image: '/images/insta-clone.png',
+    tech: ['Tailwind CSS', 'React'],
+    url: 'https://instaclone-369.netlify.app/'
+  }
+];
 
 const ProjectCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const minSwipeDistance = 50; // Distância mínima em pixels para considerar um swipe
+  const [direction, setDirection] = useState(0);
 
-  const projects = [
-    {
-      title: 'Formulário',
-      description: 'Sistema de cadastro completo',
-      image: '/images/formulario.png',
-      tech: ['HTML', 'CSS'],
-      url: 'https://marcelo-silva369.github.io/Formulario/' // Adicione a URL do projeto
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      rotateY: direction > 0 ? -45 : 45,
+      scale: 0.8,
+      opacity: 0,
+      z: -300
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      rotateY: 0,
+      scale: 1,
+      opacity: 1,
+      z: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 20,
+        duration: 0.8
+      }
     },
-    {
-      title: 'Jogo-P-P-T',
-      description: 'Jogo de Pedra, Papel e Tesoura',
-      image: '/images/jogo-pedra-papel-tesoura.png',
-      tech: ['HTML', 'CSS', 'JavaScript'],
-      url: 'https://marcelo-silva369.github.io/Jogo-pedra-papel-tesoura/' // Adicione a URL do projeto
-    },
-    {
-      title: 'Site-Pokédex',
-      description: 'Catálogo completo de Pokémons',
-      image: '/images/pokedex.png',
-      tech: ['HTML', 'CSS', 'JavaScript', 'API'],
-      url: 'https://marcelo-silva369.github.io/pokedex/' // Adicione a URL do projeto
-    },
-    {
-      title: 'List-Supermercado',
-      description: 'Lista de compras interativa',
-      image: '/images/list-supermercado.png',
-      tech: ['HTML', 'CSS', 'JavaScript'],
-      url: 'https://marcelo-silva369.github.io/lista-supermercado/' // Adicione a URL do projeto
-    },
-    {
-      title: 'LandingPage-Hotel',
-      description: 'Site promocional para hotel',
-      image: '/images/landingpage-hotel.png',
-      tech: ['HTML', 'CSS'],
-      url: 'https://marcelo-silva369.github.io/landing-page-hotel/' // Adicione a URL do projeto
-    },
-    {
-      title: 'Cadastro de Produtos',
-      description: 'Automação de cadastro de produtos usando o Pandas do Python',
-      image: '/images/automacao-python.png',
-      tech: ['Python'],
-      url: 'https://youtu.be/obEeJ5uBzvY?si=EWd61LqyqdN5CDKx' // Adicione a URL do projeto
-    },
-    {
-      title: 'Dashboard de Vendas',
-      description: 'Análise de dados de vendas e faturamento mensal, trimestral e anual',
-      image: '/images/dashboard-vendas.png',
-      tech: ['Excel'],
-      url: 'https://youtu.be/ubc12N9-EwE?si=JI3u5Cwoi-HlobVb' // Adicione a URL do projeto
-    },
-    {
-      title: 'Dashboard Hawking',
-      description: 'Análise de dados de vendedores com hawking mensal e anual',
-      image: '/images/dashboard-Hawking-vendas.png',
-      tech: ['Excel'],
-      url: 'https://youtu.be/bILNUs9thoE?si=aBSDt9CegQNUnb08' // Adicione a URL do projeto
-    },
-    {
-      title: 'Clone do Instagram',
-      description: 'Clone da tela de login do Instagram sem backend',
-      image: '/images/insta-clone.png',
-      tech: ['HTML', 'Tailwind CSS', 'JavaScript', 'React', 'Node.js'],
-      url: 'https://instaclone-369.netlify.app/' // Adicione a URL do projeto
-    }
-  ];
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === projects.length - 1 ? 0 : prevIndex + 1
-    );
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      rotateY: direction < 0 ? -45 : 45,
+      scale: 0.8,
+      opacity: 0,
+      z: -300,
+      transition: {
+        duration: 0.5
+      }
+    })
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
-    );
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [projects.length]);
-
-  // Funções para manipulação de toque
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    
-    const distance = touchStartX - touchEndX;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      nextSlide();
-    } else if (isRightSwipe) {
-      prevSlide();
-    }
+  const paginate = (newDirection: number) => {
+    setDirection(newDirection);
+    setCurrentIndex((prev) => {
+      let nextIndex = prev + newDirection;
+      if (nextIndex < 0) nextIndex = projects.length - 1;
+      if (nextIndex >= projects.length) nextIndex = 0;
+      return nextIndex;
+    });
   };
 
   return (
-    <section className="pb-16 sm:pb-20 bg-gradient-to-b from-black/30 to-transparent">
-      <div className="container mx-auto px-4 sm:px-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-4 sm:mb-6">
-          Projetos
-        </h2>
-        
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-black/50 to-transparent backdrop-blur-sm border border-green-400/20">
-          <div 
-            ref={carouselRef}
-            className="flex transition-transform duration-1000 ease-in-out touch-none"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {projects.map((project, index) => (
+    <section className="relative w-full py-20 pb-32 overflow-hidden bg-gradient-to-b from-slate-950 to-blue-950 border-t border-blue-500/20" style={{ perspective: 2000 }}>
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="text-4xl sm:text-5xl font-black text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-500 mb-16"
+        >
+          Meus Projetos 3D
+        </motion.h2>
+
+        <div className="relative w-full max-w-5xl mx-auto h-[500px] flex justify-center items-center">
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
+              className="absolute w-full sm:w-[80%] lg:w-[60%] h-full flex flex-col justify-between bg-gray-800/80 backdrop-blur-xl border border-blue-400/30 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-blue-500/20"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
               <div 
-                key={index}
-                className="w-full flex-shrink-0 p-4 sm:p-6 lg:p-8"
+                className="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden shadow-inner mb-6"
+                style={{ transform: "translateZ(50px)" }}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
-                  <div className="order-2 md:order-1 text-center md:text-left">
-                    <h3 className="text-2xl sm:text-3xl font-bold text-green-400 mb-3 sm:mb-4">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-300 text-base sm:text-lg mb-4 sm:mb-6">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap justify-center md:justify-start gap-2 sm:gap-3 mb-6 sm:mb-8">
-                      {project.tech.map((tech, techIndex) => (
-                        <span 
-                          key={techIndex}
-                          className="px-3 sm:px-4 py-2 bg-green-400/20 border border-green-400/50 rounded-full text-green-400 text-xs sm:text-sm font-semibold"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    <a 
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block px-6 sm:px-8 py-3 bg-gradient-to-r from-green-400 to-green-500 text-black font-semibold rounded-lg hover:from-green-300 hover:to-green-400 transition-all duration-300 hover:scale-105 text-sm sm:text-base"
-                    >
-                      Ver Projeto
-                    </a>
-                  </div>
-                  
-                  <div className="order-1 md:order-2 touch-auto">
-                    <div className="bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm border border-white/10">
-                      <img 
-                        src={project.image} 
-                        alt={project.title}
-                        className="w-full h-48 sm:h-56 lg:h-64 object-cover rounded-lg bg-gray-800"
-                      />
-                    </div>
-                  </div>
-                </div>
+                <img 
+                  src={projects[currentIndex].image} 
+                  alt={projects[currentIndex].title}
+                  className="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
               </div>
-            ))}
-          </div>
+
+              <div className="flex-1 flex flex-col justify-end text-center" style={{ transform: "translateZ(30px)" }}>
+                <h3 className="text-3xl font-bold text-white mb-3">
+                  {projects[currentIndex].title}
+                </h3>
+                <p className="text-gray-300 mb-6 text-lg">
+                  {projects[currentIndex].description}
+                </p>
+
+                <div className="flex flex-wrap justify-center gap-3 mb-8">
+                  {projects[currentIndex].tech.map((t, i) => (
+                    <span key={i} className="px-4 py-1.5 bg-green-500/10 border border-green-500/30 rounded-full text-green-400 text-sm font-medium">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <a 
+                  href={projects[currentIndex].url}
+                  target="_blank"
+                  className="mx-auto flex items-center justify-center gap-2 w-48 py-3 bg-gradient-to-r from-blue-400 to-cyan-500 text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(96,165,250,0.5)] transition-all hover:scale-105"
+                  style={{ transform: "translateZ(40px)" }}
+                >
+                  <ExternalLink size={20} />
+                  Visitar App
+                </a>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <button 
+            className="absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 z-20 w-14 h-14 flex items-center justify-center bg-black/50 border border-blue-500/50 text-blue-400 rounded-full hover:bg-blue-500 hover:text-white transition-all hover:scale-110 backdrop-blur-md"
+            onClick={() => paginate(-1)}
+          >
+            <ChevronLeft size={30} />
+          </button>
           
+          <button 
+            className="absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 z-20 w-14 h-14 flex items-center justify-center bg-black/50 border border-green-500/50 text-green-400 rounded-full hover:bg-green-500 hover:text-black transition-all hover:scale-110 backdrop-blur-md"
+            onClick={() => paginate(1)}
+          >
+            <ChevronRight size={30} />
+          </button>
         </div>
-        
-        {/* Única linha de indicadores */}
-        <div className="flex justify-center mt-6 space-x-2">
-          {projects.map((_, index) => (
+
+        {/* Indicadores em baixo */}
+        <div className="flex justify-center mt-12 gap-3 relative z-20">
+          {projects.map((_, i) => (
             <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-2.5 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-green-400 w-8' 
-                  : 'bg-gray-600 w-2.5 hover:bg-gray-400'
-              }`}
-              aria-label={`Ir para o projeto ${index + 1}`}
+              key={i}
+              onClick={() => {
+                setDirection(i > currentIndex ? 1 : -1);
+                setCurrentIndex(i);
+              }}
+              className={`h-2 rounded-full transition-all duration-500 ${i === currentIndex ? 'w-10 bg-blue-400 shadow-[0_0_10px_#60a5fa]' : 'w-3 bg-gray-600 hover:bg-gray-400'}`}
             />
           ))}
         </div>
