@@ -10,21 +10,37 @@ import {
   MessageCircle,
 } from "lucide-react";
 import PageTransition from "@/components/PageTransition";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+
 import AnimatedTitle from "@/components/AnimatedTitle";
 
 const Contato = () => {
+  const [showContent, setShowContent] = useState(false);
+
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border-t border-cyan-500/10">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
         <Header />
 
-        <main className="container mx-auto px-4 sm:px-6 py-24 sm:py-32 relative z-10 overflow-hidden">
-          <AnimatedTitle text="CONTATOS" />
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden">
+          <AnimatedTitle 
+            text="CONTATOS" 
+            onComplete={() => setShowContent(true)}
+          />
+
+          <AnimatePresence>
+            {showContent && (
+              <motion.div
+                initial={{ opacity: 0, filter: "blur(1px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              >
+
           <motion.div 
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "80px", opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
+            transition={{ delay: 0.7, duration: 0.7 }}
             className="h-1 bg-gradient-to-r from-cyan-400 to-blue-600 mx-auto rounded-full shadow-[0_0_10px_#22d3ee] mb-16"
           ></motion.div>
 
@@ -131,7 +147,7 @@ const Contato = () => {
 
                   <div className="relative z-10 flex items-center space-x-6 p-4">
                     <a
-                      href="https://www.google.com/maps?q=Rua:+Francisco+Barbosa+Xavier,+38,+São+Domingos,+Brejo+da+Madre+de+Deus+-+PE,+Brasil"
+                      href="https://www.google.com.br/maps/place/8%C2%B000'39.2%22S+36%C2%B002'59.1%22W/@-8.010875,-36.0503797,216m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-8.010875!4d-36.049736?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-14 h-14 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.2)] border border-purple-500/20 group-hover:border-pink-500/50"
@@ -150,9 +166,9 @@ const Contato = () => {
                       />
                     </a>
                     <div>
-                      <p className="text-purple-400/80 text-sm font-semibold uppercase tracking-wider mb-1">Local Base</p>
-                      <p className="text-white font-semibold text-base sm:text-lg">Rua Francisco Barbosa Xavier, 38</p>
-                      <p className="text-slate-300 text-sm sm:text-base">São Domingos, Brejo da Madre de Deus - PE</p>
+                      <p className="text-purple-400/80 text-sm font-semibold uppercase tracking-wider mb-1">Endereço</p>
+                      <p className="text-white font-semibold text-base sm:text-lg">Rua Projetada - 70</p>
+                      <p className="text-slate-300 text-sm sm:text-base">Vila Cannã - Caruaru - PE</p>
                     </div>
                   </div>
                 </motion.div>
@@ -165,7 +181,7 @@ const Contato = () => {
                   
                   {[
                     { name: "GitHub", href: "https://github.com/Marcelo-Silva369", color: "from-gray-700 to-black", img: "https://img.icons8.com/3d-fluency/94/github.png", shadow: "shadow-gray-500/50" },
-                    { name: "LinkedIn", href: "http://www.linkedin.com/in/marcelo-tubarao", color: "from-blue-600 to-blue-900", img: "https://img.icons8.com/3d-fluency/94/linkedin.png", shadow: "shadow-blue-500/50" },
+                    { name: "LinkedIn", href: "http://www.linkedin.com/in/shark-dev", color: "from-blue-600 to-blue-900", img: "https://img.icons8.com/3d-fluency/94/linkedin.png", shadow: "shadow-blue-500/50" },
                     { name: "Instagram", href: "https://www.instagram.com/shark.dev_369/profilecard/?igsh=MW9jcDZyeWQxdnZxbQ==", color: "from-purple-500 via-pink-500 to-orange-500", img: "https://img.icons8.com/3d-fluency/94/instagram-new.png", shadow: "shadow-pink-500/50" },
                     { name: "YouTube", href: "https://www.youtube.com/@SharkDev-369", color: "from-red-600 to-red-900", img: "https://img.icons8.com/3d-fluency/94/youtube-play.png", shadow: "shadow-red-500/50" },
                     { name: "WhatsApp", href: "https://wa.me/5581982356879", color: "from-green-500 to-emerald-800", img: "https://img.icons8.com/3d-fluency/94/whatsapp.png", shadow: "shadow-green-500/50" },
@@ -198,12 +214,15 @@ const Contato = () => {
                 </div>
               </div>
 
+              </motion.div>
+            </div>
             </motion.div>
-          </div>
-        </main>
-      </div>
-    </PageTransition>
-  );
+          )}
+        </AnimatePresence>
+      </main>
+    </div>
+  </PageTransition>
+);
 };
 
 export default Contato;

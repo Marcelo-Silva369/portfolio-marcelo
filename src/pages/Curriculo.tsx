@@ -7,8 +7,10 @@ import { useState } from "react";
 import AnimatedTitle from "@/components/AnimatedTitle";
 
 const Curriculo = () => {
+  const [showContent, setShowContent] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [activeCard, setActiveCard] = useState<string | null>(null);
+
 
   const handleDownloadPDFSemFoto = () => {
     const link = document.createElement("a");
@@ -31,20 +33,32 @@ const Curriculo = () => {
   return (
     <PageTransition>
       <div 
-        className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border-t border-cyan-500/10"
+        className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900"
         onClick={() => setActiveCard(null)}
       >
         <Header />
 
-        <main className="pt-24 pb-20 overflow-hidden px-4 sm:px-6">
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden">
           <div className="container mx-auto max-w-5xl">
-            <AnimatedTitle text="CURRÍCULO" />
+            <AnimatedTitle 
+              text="CURRÍCULO" 
+              onComplete={() => setShowContent(true)}
+            />
+
+            <AnimatePresence>
+              {showContent && (
+                <motion.div
+                  initial={{ opacity: 0, filter: "blur(1px)" }}
+                  animate={{ opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                >
+
 
             {/* CURRÍCULO COM FOTO */}
             <motion.div 
               initial={{ opacity: 0, x: -100, rotateY: 30 }}
               animate={{ opacity: 1, x: 0, rotateY: 0 }}
-              transition={{ duration: 0.8, type: "spring" }}
+              transition={{ duration: 0.7, type: "spring" }}
               className="mb-24"
               style={{ perspective: 1500 }}
             >
@@ -209,8 +223,12 @@ const Curriculo = () => {
               </motion.div>
             </motion.div>
 
-          </div>
-        </main>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </main>
+
 
         {/* MODAL FULLSCREEN DE IMAGEM */}
         <AnimatePresence>

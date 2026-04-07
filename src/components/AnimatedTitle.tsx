@@ -4,24 +4,31 @@ import { motion } from "framer-motion";
 interface AnimatedTitleProps {
   text: string;
   className?: string;
+  onComplete?: () => void;
 }
 
-const AnimatedTitle = ({ text, className = "" }: AnimatedTitleProps) => {
+const AnimatedTitle = ({ text, className = "", onComplete }: AnimatedTitleProps) => {
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
+    // Se o texto já estiver completo (por exemplo, após uma re-renderização do pai), não reinicia.
+    if (displayedText === text) return;
+
     let index = 0;
     const interval = setInterval(() => {
       setDisplayedText(text.slice(0, index));
       index++;
       if (index > text.length) {
         clearInterval(interval);
+        if (onComplete) {
+          setTimeout(onComplete, 600); // Pausa de 600ms após terminar de escrever
+        }
       }
-    }, 70); // Speed of typing
+    }, 120); // Velocidade de escrita mais lenta (120ms)
 
     return () => clearInterval(interval);
-  }, [text]);
+  }, [text, onComplete]); // Removi o displayedText do trigger para evitar loops, mas mantive a lógica de segurança.
 
   useEffect(() => {
     const cursorInterval = setInterval(() => {

@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import PageTransition from "@/components/PageTransition";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
 import { useEffect, useState } from "react";
 import AnimatedTitle from "@/components/AnimatedTitle";
 
@@ -38,6 +39,7 @@ const TypewriterText = ({ text, delay, speed = 20 }: { text: string, delay: numb
 };
 
 const Perfil = () => {
+  const [showContent, setShowContent] = useState(false);
   const fullText = `Oi, me chamo Marcelo! Sou pernambucano, nascido em Tacaimbó, na zona rural, vindo de uma família simples e batalhadora. Com 2 anos fui morar em São Paulo, mas voltei pra minha terrinha com 5 anos. Minha infância foi bem humilde, sem muito acesso a tecnologia, mas sempre fui muito curioso e com vontade de aprender tudo que via pela frente.
 
 Aos 16 anos me mudei pra Toritama, onde moro até hoje. Foi aqui que tive mais contato com internet e tecnologia e também descobri o dom de cantar, onde passei 18 anos. Conheci muitas pessoas legais e cantei em várias bandas de forró da região. Sempre fui apaixonado por tudo que envolve tecnologia, e nos últimos anos isso só cresceu. Já trabalhei com marketing, focado em prospecção de leads, o que me deu uma boa base de comunicação e estratégia.
@@ -48,21 +50,32 @@ Estou focado nos estudos de programação e inteligência artificial — esse mu
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border-t border-cyan-500/10">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
         <Header />
 
-        <main className="pt-24 pb-20 relative z-10">
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-            <AnimatedTitle text="SOBRE MIM" />
+            <AnimatedTitle 
+              text="SOBRE MIM" 
+              onComplete={() => setShowContent(true)}
+            />
 
-            <div className="grid lg:grid-cols-12 gap-10" style={{ perspective: 2000 }}>
+            <AnimatePresence>
+              {showContent && (
+                <motion.div 
+                  initial={{ opacity: 0, filter: "blur(1px)" }}
+                  animate={{ opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                  className="grid lg:grid-cols-12 gap-10" 
+                  style={{ perspective: 2000 }}
+                >
               
               {/* SIDEBAR: PERFIL CARD */}
               <motion.div 
                 className="lg:col-span-4"
                 initial={{ opacity: 0, x: -100, rotateY: -30 }}
                 animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+                transition={{ duration: 0.7, type: "spring", bounce: 0.4 }}
               >
                 <div 
                   className="bg-gradient-to-b from-slate-800 to-blue-950/80 backdrop-blur-xl border border-blue-500/30 rounded-[2rem] p-6 sm:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.5)] transform-gpu lg:sticky lg:top-28"
@@ -163,11 +176,13 @@ Estou focado nos estudos de programação e inteligência artificial — esse mu
                   
                 </div>
               </motion.div>
-            </div>
-          </div>
-        </main>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </PageTransition>
+    </main>
+  </div>
+</PageTransition>
   );
 };
 

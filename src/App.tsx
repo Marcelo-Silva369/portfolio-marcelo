@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import Perfil from "./pages/Perfil";
+import Projetos from "./pages/Projetos";
 import Certificados from "./pages/Certificados";
 import Curriculo from "./pages/Curriculo";
 import Contato from "./pages/Contato";
@@ -18,10 +19,11 @@ const queryClient = new QueryClient();
 const AnimatedRoutes = () => {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Index />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/projetos" element={<Projetos />} />
         <Route path="/certificados" element={<Certificados />} />
         <Route path="/curriculo" element={<Curriculo />} />
         <Route path="/contato" element={<Contato />} />

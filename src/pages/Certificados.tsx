@@ -1,11 +1,14 @@
 import Header from '@/components/Header';
 import PageTransition from '@/components/PageTransition';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+
 import AnimatedTitle from '@/components/AnimatedTitle';
 
 const Certificados = () => {
+  const [showContent, setShowContent] = useState(false);
   const [activeCard, setActiveCard] = useState<number | null>(null);
+
   const certificates = [
     {
       title: 'Frontend Completo',
@@ -76,22 +79,34 @@ const Certificados = () => {
   return (
     <PageTransition>
       <div 
-        className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border-t border-blue-500/10"
+        className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900"
         onClick={() => setActiveCard(null)}
       >
         <Header />
       
-        <main className="pt-24 pb-20 container mx-auto px-6 relative z-10">
-          <AnimatedTitle text="CERTIFICADOS" />
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden">
+          <AnimatedTitle 
+            text="CERTIFICADOS" 
+            onComplete={() => setShowContent(true)}
+          />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10" style={{ perspective: 2000 }}>
+          <AnimatePresence>
+            {showContent && (
+              <motion.div 
+                initial={{ opacity: 0, filter: "blur(1px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10" 
+                style={{ perspective: 2000 }}
+              >
+
             {certificates.map((cert, index) => (
               <motion.div 
                 key={index}
                 initial={{ opacity: 0, z: -300, rotateY: 45 }}
                 whileInView={{ opacity: 1, z: 0, rotateY: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1, type: "spring" }}
+                transition={{ duration: 0.7, delay: index * 0.1, type: "spring" }}
                 whileHover={{ 
                   scale: 1.05, 
                   rotateY: 0, // Simplifying to scale-only on mobile for stability, or could use more complex logic
@@ -168,8 +183,11 @@ const Certificados = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </main>
+
       </div>
     </PageTransition>
   );
