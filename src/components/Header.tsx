@@ -34,13 +34,13 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/5 shadow-lg">
+      <header className="fixed top-0 left-0 w-full z-50 bg-slate-950/60 backdrop-blur-md shadow-lg">
         <nav className="container mx-auto px-4 sm:px-8 h-20 sm:h-28 flex justify-between items-center relative">
           
           <div className="flex items-center">
             <div className="group flex items-center gap-3 cursor-default">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600/10 rounded-xl border-2 border-blue-500/20 flex items-center justify-center">
-                <span className="text-blue-500 font-black text-lg sm:text-xl">S</span>
+              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-600/10 rounded-xl border-2 border-blue-500/20 flex items-center justify-center overflow-hidden">
+                <img src="/images/logo-oficial_shark_dev.png" alt="Shark Dev Logo" className="w-full h-full object-contain" />
               </div>
               <span className="text-white font-black text-xl sm:text-2xl tracking-tighter">
                  SHARK <span className="text-blue-500">DEV</span>

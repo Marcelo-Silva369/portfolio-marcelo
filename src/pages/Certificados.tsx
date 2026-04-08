@@ -1,9 +1,11 @@
 import Header from '@/components/Header';
 import PageTransition from '@/components/PageTransition';
 import { motion, AnimatePresence } from 'framer-motion';
+import { GlobalBackground } from '@/components/GlobalBackground';
 import { useState } from 'react';
 
 import AnimatedTitle from '@/components/AnimatedTitle';
+import Footer from '@/components/Footer';
 
 const Certificados = () => {
   const [showContent, setShowContent] = useState(false);
@@ -79,12 +81,13 @@ const Certificados = () => {
   return (
     <PageTransition>
       <div 
-        className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900"
+        className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative flex flex-col"
         onClick={() => setActiveCard(null)}
       >
+        <GlobalBackground />
         <Header />
       
-        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden">
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden flex-grow">
           <AnimatedTitle 
             text="CERTIFICADOS" 
             onComplete={() => setShowContent(true)}
@@ -93,52 +96,49 @@ const Certificados = () => {
           <AnimatePresence>
             {showContent && (
               <motion.div 
-                initial={{ opacity: 0, filter: "blur(1px)" }}
-                animate={{ opacity: 1, filter: "blur(0px)" }}
-                transition={{ duration: 1, ease: "easeInOut" }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10" 
-                style={{ perspective: 2000 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-11" 
+                style={{ perspective: 1500 }}
               >
 
             {certificates.map((cert, index) => (
               <motion.div 
                 key={index}
-                initial={{ opacity: 0, z: -300, rotateY: 45 }}
+                initial={{ opacity: 0, z: -200, rotateY: 30 }}
                 whileInView={{ opacity: 1, z: 0, rotateY: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: index * 0.1, type: "spring" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ 
                   scale: 1.05, 
-                  rotateY: 0, // Simplifying to scale-only on mobile for stability, or could use more complex logic
-                  rotateX: 5, 
-                  z: 50,
-                  transition: { delay: 0, duration: 0.3 }
+                  rotateX: 5,
+                  z: 30,
+                  transition: { duration: 0.3 }
                 }}
-                className="relative overflow-hidden rounded-3xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] cursor-pointer transform-gpu group border border-transparent"
+                className="relative overflow-hidden rounded-[2.5rem] shadow-2xl cursor-pointer transform-gpu group border border-blue-500/10"
                 style={{ transformStyle: 'preserve-3d' }}
                 onClick={() => setActiveCard(activeCard === index ? null : index)}
               >
                 {/* CLIPPED BEAM LAYER */}
                 <div className="absolute inset-0 pointer-events-none" style={{ transform: "translateZ(0px)" }}>
-                  <div className="absolute top-1/2 left-1/2 w-[1200px] h-[1200px]" style={{ transform: 'translate(-50%, -50%)' }}>
+                  <div className="absolute top-1/2 left-1/2 w-[1000px] h-[1000px]" style={{ transform: 'translate(-50%, -50%)' }}>
                     <motion.div
                       animate={{ rotate: [0, index % 2 === 0 ? 360 : -360] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                      className="w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: `conic-gradient(from 0deg, transparent 70%, #3b82f6 100%)` }}
+                      transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                      className="w-full h-full opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: `conic-gradient(from 0deg, transparent 70%, #60a5fa 100%)` }}
                     />
                   </div>
                 </div>
 
-                <div 
-                  className="absolute inset-[2px] bg-gradient-to-br from-[#000000] via-slate-950 to-[#020617] backdrop-blur-3xl rounded-[22px]"
-                  style={{ transformStyle: 'preserve-3d', transform: 'translateZ(1px)' }}
-                ></div>
-
+                {/* FEIXE LUMINOSO */}
+                <div className="absolute inset-[2px] bg-slate-900/30 backdrop-blur-3xl rounded-[2.3rem]"></div>
+                
                 {/* CONTENT LAYER */}
                 <div className="relative p-4 sm:p-6 flex flex-col h-full" style={{ transformStyle: 'preserve-3d' }}>
                   <div 
-                    className="h-40 sm:h-48 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 flex overflow-hidden relative shadow-inner group/img border border-blue-800/40"
+                    className="h-40 sm:h-48 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 flex overflow-hidden relative shadow-inner group/img border border-blue-900/30"
                     style={{ transform: "translateZ(30px)" }}
                   >
                     <img 
@@ -188,6 +188,7 @@ const Certificados = () => {
           </AnimatePresence>
         </main>
 
+        <Footer isVisible={showContent} />
       </div>
     </PageTransition>
   );

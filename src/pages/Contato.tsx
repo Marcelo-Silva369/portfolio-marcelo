@@ -11,7 +11,9 @@ import {
 } from "lucide-react";
 import PageTransition from "@/components/PageTransition";
 import { motion, AnimatePresence } from "framer-motion";
+import { GlobalBackground } from "@/components/GlobalBackground";
 import { useState } from "react";
+import Footer from "@/components/Footer";
 
 import AnimatedTitle from "@/components/AnimatedTitle";
 
@@ -20,10 +22,11 @@ const Contato = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative flex flex-col">
+        <GlobalBackground />
         <Header />
 
-        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden">
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden flex-grow">
           <AnimatedTitle 
             text="CONTATOS" 
             onComplete={() => setShowContent(true)}
@@ -220,6 +223,8 @@ const Contato = () => {
           )}
         </AnimatePresence>
       </main>
+      
+      <Footer isVisible={showContent} />
     </div>
   </PageTransition>
 );

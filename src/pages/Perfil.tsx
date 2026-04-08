@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import PageTransition from "@/components/PageTransition";
 import { motion, AnimatePresence } from "framer-motion";
+import { GlobalBackground } from "@/components/GlobalBackground";
+import Footer from "@/components/Footer";
 
 import { useEffect, useState } from "react";
 import AnimatedTitle from "@/components/AnimatedTitle";
@@ -50,10 +52,11 @@ Estou focado nos estudos de programação e inteligência artificial — esse mu
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative flex flex-col">
+        <GlobalBackground />
         <Header />
 
-        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden">
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden flex-grow">
           <div className="container mx-auto px-4 md:px-6 max-w-6xl">
             <AnimatedTitle 
               text="SOBRE MIM" 
@@ -124,7 +127,7 @@ Estou focado nos estudos de programação e inteligência artificial — esse mu
                 transition={{ duration: 0.8, type: "spring", bounce: 0.4, delay: 0.2 }}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <div className="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-[2rem] p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                <div className="bg-gradient-to-b from-slate-900/90 to-blue-950/80 backdrop-blur-md border border-slate-700/50 rounded-[2rem] p-6 sm:p-10 shadow-2xl relative overflow-hidden">
                   {/* Decorative Elements */}
                   <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                   <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
@@ -181,6 +184,8 @@ Estou focado nos estudos de programação e inteligência artificial — esse mu
         </AnimatePresence>
       </div>
     </main>
+    
+    <Footer isVisible={showContent} />
   </div>
 </PageTransition>
   );

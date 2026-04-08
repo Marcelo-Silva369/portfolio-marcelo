@@ -1,9 +1,11 @@
 import Header from '@/components/Header';
 import PageTransition from '@/components/PageTransition';
 import { motion, AnimatePresence } from 'framer-motion';
+import { GlobalBackground } from '@/components/GlobalBackground';
 import { useState } from 'react';
 import AnimatedTitle from '@/components/AnimatedTitle';
 import { ExternalLink, Github } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 const Projetos = () => {
   const [showContent, setShowContent] = useState(false);
@@ -69,10 +71,11 @@ const Projetos = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative flex flex-col">
+        <GlobalBackground />
         <Header />
         
-        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10">
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 flex-grow">
           <AnimatedTitle 
             text="MEUS PROJETOS" 
             onComplete={() => setShowContent(true)}
@@ -115,7 +118,7 @@ const Projetos = () => {
                       </div>
                     </div>
 
-                    <div className="absolute inset-[2px] bg-slate-950/90 backdrop-blur-3xl rounded-[2.3rem]"></div>
+                    <div className="absolute inset-[2px] bg-slate-900/30 backdrop-blur-3xl rounded-[2.3rem]"></div>
 
                     {/* Conteúdo do Projeto */}
                     <div className="relative p-6 sm:p-7 flex flex-col h-full z-10" style={{ transformStyle: 'preserve-3d' }}>
@@ -164,6 +167,8 @@ const Projetos = () => {
             )}
           </AnimatePresence>
         </main>
+        
+        <Footer isVisible={showContent} />
       </div>
     </PageTransition>
   );

@@ -1,4 +1,3 @@
-import ThreeBackground from './ThreeBackground';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
@@ -109,9 +108,7 @@ const TechCard = ({ tech, index }: { tech: typeof technologies[0], index: number
 const Hero = () => {
   return (
     <div className="relative pt-24 pb-16 sm:pt-28 sm:pb-20 flex items-center justify-center min-h-screen overflow-hidden">
-      {/* 3D Background Sphere */}
-      <ThreeBackground />
-
+      
       <div className="text-center z-10 max-w-5xl mx-auto flex flex-col items-center">
         
         {/* 3D Animated Typewriter Title */}

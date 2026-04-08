@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Download, X } from "lucide-react";
 import PageTransition from "@/components/PageTransition";
 import { motion, AnimatePresence } from "framer-motion";
+import { GlobalBackground } from "@/components/GlobalBackground";
 import { useState } from "react";
+import Footer from "@/components/Footer";
 import AnimatedTitle from "@/components/AnimatedTitle";
 
 const Curriculo = () => {
@@ -32,13 +34,11 @@ const Curriculo = () => {
 
   return (
     <PageTransition>
-      <div 
-        className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900"
-        onClick={() => setActiveCard(null)}
-      >
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative flex flex-col">
+        <GlobalBackground />
         <Header />
-
-        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden">
+        
+        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden flex-grow">
           <div className="container mx-auto max-w-5xl">
             <AnimatedTitle 
               text="CURRÍCULO" 
@@ -226,46 +226,11 @@ const Curriculo = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </main>
-
-
-        {/* MODAL FULLSCREEN DE IMAGEM */}
-        <AnimatePresence>
-          {selectedImage && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedImage(null)}
-              className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-lg p-4 sm:p-10 cursor-pointer"
-            >
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0, y: 50 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.8, opacity: 0, y: 50 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="relative max-w-5xl w-full max-h-full overflow-hidden rounded-2xl shadow-[0_0_50px_rgba(59,130,246,0.4)] border border-blue-500/30 bg-white"
-                onClick={(e) => e.stopPropagation()} // Previne fechar ao clicar na imagem
-              >
-                <button
-                  onClick={() => setSelectedImage(null)}
-                  className="absolute top-2 right-2 sm:top-4 sm:right-4 z-50 bg-black/50 hover:bg-red-500 text-white rounded-full p-2 backdrop-blur-md transition-colors"
-                >
-                  <X size={20} className="sm:w-6 sm:h-6" />
-                </button>
-                <div className="max-h-[85vh] overflow-y-auto custom-scrollbar">
-                  <img
-                    src={selectedImage}
-                    alt="Currículo Ampliado"
-                    className="w-full h-auto object-contain"
-                  />
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+        </div>
+      </main>
+      
+      <Footer isVisible={showContent} />
+    </div>
     </PageTransition>
   );
 };
