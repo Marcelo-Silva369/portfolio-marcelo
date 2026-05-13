@@ -1,236 +1,143 @@
 import Header from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import { Download, X } from "lucide-react";
-import PageTransition from "@/components/PageTransition";
-import { motion, AnimatePresence } from "framer-motion";
-import { GlobalBackground } from "@/components/GlobalBackground";
+import { Download, Loader2 } from "lucide-react";
 import { useState } from "react";
+import PageTransition from "@/components/PageTransition";
+import { motion } from "framer-motion";
+
 import Footer from "@/components/Footer";
-import AnimatedTitle from "@/components/AnimatedTitle";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Curriculo = () => {
-  const [showContent, setShowContent] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [activeCard, setActiveCard] = useState<string | null>(null);
+  const { t } = useLanguage();
+  const [selectedResume, setSelectedResume] = useState<'com-foto' | 'sem-foto'>('com-foto');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-
-  const handleDownloadPDFSemFoto = () => {
-    const link = document.createElement("a");
-    link.href = "/documents/Currículo sem foto.pdf";
-    link.download = "Curriculo-Marcelo-Silva.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleSelectResume = (type: 'com-foto' | 'sem-foto') => {
+    if (selectedResume !== type) {
+      setImageLoaded(false);
+      setSelectedResume(type);
+    }
   };
-
-  const handleDownloadPDFComFoto = () => {
-    const link = document.createElement("a");
-    link.href = "/documents/Currículo com foto.pdf";
-    link.download = "Curriculo-Marcelo-Silva-Com-Foto.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
+  
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative flex flex-col">
-        <GlobalBackground />
+      <div className="min-h-screen relative flex flex-col bg-black text-white">
+        
         <Header />
         
-        <main className="container mx-auto px-4 sm:px-6 pt-44 sm:pt-32 pb-24 relative z-10 overflow-hidden flex-grow">
-          <div className="container mx-auto max-w-5xl">
-            <AnimatedTitle 
-              text="CURRÍCULO" 
-              onComplete={() => setShowContent(true)}
-            />
+        <main className="container mx-auto px-6 pt-32 pb-24 relative z-10 flex-grow">
+          <div className="flex flex-col gap-4 mb-1 md:mb-1">
+            <span className="text-primary text-[11px] font-black uppercase tracking-[0.4em]">{t('cv.title')}</span>
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-black uppercase leading-none tracking-tighter">
+              {t('cv.subtitle')} <br />
+              <span className="text-white/20">{t('cv.card')}</span>
+            </h1>
+          </div>
 
-            <AnimatePresence>
-              {showContent && (
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Card Preview */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative aspect-[4/5] md:aspect-[1/1.4] bg-white/[0.02] border border-white/5 overflow-hidden group flex items-center justify-center order-2"
+            >
+              {!imageLoaded && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white/20 gap-4">
+                  <Loader2 size={32} className="animate-spin" />
+                  <span className="text-[10px] uppercase tracking-widest font-black">Carregando visualização...</span>
+                </div>
+              )}
+              <img 
+                src={selectedResume === 'com-foto' ? "/images/Currículo com foto.png" : "/images/Currículo sem foto.png"} 
+                alt="Resume Preview" 
+                onLoad={() => setImageLoaded(true)}
+                className={`w-full h-full object-cover object-top transition-all duration-700 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0 scale-95'
+                }`}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 pointer-events-none" />
+              
+              <div className="absolute bottom-12 left-12 pointer-events-none">
+                <span className="text-primary text-[10px] font-black uppercase tracking-[0.3em]">Official</span>
+                <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tighter">
+                  {selectedResume === 'com-foto' ? t('cv.v1_name') : t('cv.v2_name')}
+                </h3>
+              </div>
+            </motion.div>
+
+            {/* Actions */}
+            <div className="flex flex-col gap-12 pt-12 order-1">
+              <div className="flex flex-col gap-4">
+                <h2 className="text-2xl font-black uppercase tracking-widest">{t('cv.download')}</h2>
+                <p className="text-white/40 text-sm leading-relaxed max-w-md">
+                  {t('cv.description')}
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-4">
                 <motion.div
-                  initial={{ opacity: 0, filter: "blur(1px)" }}
-                  animate={{ opacity: 1, filter: "blur(0px)" }}
-                  transition={{ duration: 1, ease: "easeInOut" }}
+                  onClick={() => handleSelectResume('com-foto')}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`cursor-pointer flex items-center justify-between p-4 sm:p-8 border transition-colors duration-500 group ${
+                    selectedResume === 'com-foto' ? 'border-primary bg-primary/5' : 'border-white/10 hover:border-primary/50'
+                  }`}
                 >
-
-
-            {/* CURRÍCULO COM FOTO */}
-            <motion.div 
-              initial={{ opacity: 0, x: -100, rotateY: 30 }}
-              animate={{ opacity: 1, x: 0, rotateY: 0 }}
-              transition={{ duration: 0.7, type: "spring" }}
-              className="mb-24"
-              style={{ perspective: 1500 }}
-            >
-              <div 
-                className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-6 border-b border-blue-500/20 pb-6"
-                style={{ transform: "translateZ(30px)" }}
-              >
-                <h2 className="text-3xl font-bold text-cyan-400 text-center sm:text-left shadow-cyan-400/20">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">Versão com Foto</span>
-                </h2>
-                
-                <motion.div 
-                  whileHover="hover" 
-                  whileTap="tap" 
-                  variants={{ hover: { scale: 1.05 }, tap: { scale: 0.95 } }}
-                  style={{ transformStyle: "preserve-3d" }}
-                  className="rounded-xl inline-block"
-                >
-                  <Button
-                    onClick={handleDownloadPDFComFoto}
-                    className="bg-gradient-to-r from-blue-900 to-cyan-700 text-white px-8 py-6 rounded-xl border border-white/20 font-bold shadow-[0_10px_20px_rgba(59,130,246,0.3)] hover:shadow-[0_10px_30px_rgba(34,211,238,0.5)] transition-shadow"
-                  >
-                    <motion.div
-                      variants={{
-                        hover: { 
-                          scale: 1.15, 
-                          rotateZ: -3,
-                          y: -3,
-                          transition: { type: "spring", stiffness: 400, damping: 8 }
-                        }
-                      }}
-                      className="flex items-center gap-3"
+                  <div className="flex flex-col items-start gap-1">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-primary">{t('cv.v1_label')}</span>
+                    <span className="text-lg font-black uppercase tracking-widest">{t('cv.v1_name')}</span>
+                  </div>
+                  
+                  {selectedResume === 'com-foto' && imageLoaded && (
+                    <motion.a
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      href="/documents/Currículo com foto.pdf"
+                      download="Curriculo-Marcelo-Silva-Com-Foto.pdf"
+                      onClick={(e) => e.stopPropagation()}
+                      className="p-3 bg-primary text-black hover:bg-white transition-colors duration-300"
+                      title="Download PDF"
                     >
-                      <Download size={24} />
-                      Download PDF
-                    </motion.div>
-                  </Button>
+                      <Download size={20} />
+                    </motion.a>
+                  )}
+                </motion.div>
+
+                <motion.div
+                  onClick={() => handleSelectResume('sem-foto')}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`cursor-pointer flex items-center justify-between p-4 sm:p-8 border transition-colors duration-500 group ${
+                    selectedResume === 'sem-foto' ? 'border-primary bg-primary/5' : 'border-white/10 hover:border-primary/50'
+                  }`}
+                >
+                  <div className="flex flex-col items-start gap-1">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-primary">{t('cv.v2_label')}</span>
+                    <span className="text-lg font-black uppercase tracking-widest">{t('cv.v2_name')}</span>
+                  </div>
+                  
+                  {selectedResume === 'sem-foto' && imageLoaded && (
+                    <motion.a
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      href="/documents/Currículo sem foto.pdf"
+                      download="Curriculo-Marcelo-Silva-Sem-Foto.pdf"
+                      onClick={(e) => e.stopPropagation()}
+                      className="p-3 bg-primary text-black hover:bg-white transition-colors duration-300"
+                      title="Download PDF"
+                    >
+                      <Download size={20} />
+                    </motion.a>
+                  )}
                 </motion.div>
               </div>
-
-              <motion.div 
-                className="max-w-4xl mx-auto cursor-pointer"
-                whileHover={{ scale: 1.03, z: 40 }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                style={{ transformStyle: "preserve-3d" }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveCard(activeCard === 'com-foto' ? null : 'com-foto');
-                }}
-              >
-                <div className="bg-slate-800 p-2 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-blue-600/30 group">
-                  <div className="bg-white rounded-3xl overflow-hidden relative" style={{ transform: "translateZ(20px)" }}>
-                    <div 
-                      className={`absolute inset-0 flex items-center justify-center transition-all duration-300 z-20 lg:hidden ${activeCard === 'com-foto' ? 'opacity-100 pointer-events-auto bg-black/40' : 'opacity-0 group-hover/img:opacity-100 pointer-events-none group-hover/img:pointer-events-auto'}`}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <motion.span 
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedImage("/images/Currículo com foto.png");
-                        }}
-                        className="text-white font-bold bg-blue-600/90 px-6 py-3 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.5)] backdrop-blur-md cursor-pointer"
-                      >
-                        Ampliar Imagem
-                      </motion.span>
-                    </div>
-
-                    <img
-                      src="/images/Currículo com foto.png"
-                      alt="Prévia do Currículo Com Foto"
-                      className="w-full h-auto transition-opacity"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* CURRÍCULO SEM FOTO */}
-            <motion.div 
-              initial={{ opacity: 0, x: 100, rotateY: -30 }}
-              whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, type: "spring" }}
-              className="mb-10"
-              style={{ perspective: 1500 }}
-            >
-              <div 
-                className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-6 border-b border-blue-500/20 pb-6"
-                style={{ transform: "translateZ(30px)" }}
-              >
-                <h2 className="text-3xl font-bold text-center sm:text-left">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">Versão sem Foto</span>
-                </h2>
-                
-                <motion.div 
-                  whileHover="hover" 
-                  whileTap="tap" 
-                  variants={{ hover: { scale: 1.05 }, tap: { scale: 0.95 } }}
-                  style={{ transformStyle: "preserve-3d" }}
-                  className="rounded-xl inline-block"
-                >
-                  <Button
-                    onClick={handleDownloadPDFSemFoto}
-                    className="bg-gradient-to-r from-blue-900 to-cyan-700 text-white px-8 py-6 rounded-xl border border-white/20 font-bold shadow-[0_10px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_10px_30px_rgba(34,211,238,0.5)] transition-shadow"
-                  >
-                    <motion.div
-                      variants={{
-                        hover: { 
-                          scale: 1.15, 
-                          rotateZ: -3,
-                          y: -3,
-                          transition: { type: "spring", stiffness: 400, damping: 8 }
-                        }
-                      }}
-                      className="flex items-center gap-3"
-                    >
-                      <Download size={24} />
-                      Download PDF
-                    </motion.div>
-                  </Button>
-                </motion.div>
-              </div>
-
-              <motion.div 
-                className="max-w-4xl mx-auto cursor-pointer"
-                whileHover={{ scale: 1.03, z: 40 }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                style={{ transformStyle: "preserve-3d" }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveCard(activeCard === 'sem-foto' ? null : 'sem-foto');
-                }}
-              >
-                <div className="bg-slate-800 p-2 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-blue-600/30 group">
-                  <div className="bg-white rounded-3xl overflow-hidden relative" style={{ transform: "translateZ(20px)" }}>
-                    <div 
-                      className={`absolute inset-0 flex items-center justify-center transition-all duration-300 z-20 lg:hidden ${activeCard === 'sem-foto' ? 'opacity-100 pointer-events-auto bg-black/40' : 'opacity-0 group-hover/img:opacity-100 pointer-events-none group-hover/img:pointer-events-auto'}`}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <motion.span 
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedImage("/images/Currículo sem foto.png");
-                        }}
-                        className="text-white font-bold bg-blue-600/90 px-6 py-3 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.5)] backdrop-blur-md cursor-pointer"
-                      >
-                        Ampliar Imagem
-                      </motion.span>
-                    </div>
-
-                    <img
-                      src="/images/Currículo sem foto.png"
-                      alt="Prévia do Currículo Sem Foto"
-                      className="w-full h-auto transition-opacity"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            </motion.div>
-          )}
-        </AnimatePresence>
-        </div>
-      </main>
-      
-      <Footer isVisible={showContent} />
-    </div>
+            </div>
+          </div>
+        </main>
+        
+        <Footer />
+      </div>
     </PageTransition>
   );
 };

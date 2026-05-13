@@ -1,259 +1,183 @@
 import { Link, useLocation } from 'react-router-dom';
-import { User, GraduationCap, FileText, Mail, Laptop, Home } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Instagram, Linkedin, Youtube, Globe, Menu, X } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
 
 const Header = () => {
   const location = useLocation();
-  const [previousIndex, setPreviousIndex] = useState(0);
-  
+  const { language, setLanguage, t } = useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);  
   const navItems = [
-    { name: 'Home', path: '/', icon: Home },
-    { name: 'Perfil', path: '/perfil', icon: User },
-    { name: 'Projetos', path: '/projetos', icon: Laptop },
-    { name: 'Certificados', path: '/certificados', icon: GraduationCap },
-    { name: 'Currículo', path: '/curriculo', icon: FileText },
-    { name: 'Contato', path: '/contato', icon: Mail },
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.bio'), path: '/perfil' },
+    { name: t('nav.portfolio'), path: '/projetos' },
+    { name: t('nav.certificates'), path: '/certificados' },
+    { name: t('nav.cv'), path: '/curriculo' },
+    { name: t('nav.contact'), path: '/contato' },
   ];
 
-  const getActiveIndex = () => {
-    const index = navItems.findIndex(item => 
-      item.path === '/' ? location.pathname === '/' || location.pathname === '' : location.pathname.startsWith(item.path)
-    );
-    return index !== -1 ? index : 0;
-  };
+   const socialItems = [
+     { icon: Linkedin, href: 'https://www.linkedin.com/in/shark-dev' },
+     { icon: Instagram, href: 'https://www.instagram.com/shark.dev_369/' },
+     { icon: Youtube, href: 'https://youtube.com/@sharkdev-369?si=pfEhetmjKyGxO4Pg' },
+   ];
 
-  const activeIndex = getActiveIndex();
-
-  // Atualiza o índice anterior quando o ativo muda
   useEffect(() => {
-    if (activeIndex !== previousIndex) {
-      setPreviousIndex(activeIndex);
-    }
-  }, [activeIndex]);
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-slate-950/60 backdrop-blur-md shadow-lg">
-        <nav className="container mx-auto px-4 sm:px-8 h-20 sm:h-28 flex justify-between items-center relative">
-          
-          <div className="flex items-center">
-            <div className="group flex items-center gap-3 cursor-default">
-              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-600/10 rounded-xl border-2 border-blue-500/20 flex items-center justify-center overflow-hidden">
-                <img src="/images/logo-oficial_shark_dev.png" alt="Shark Dev Logo" className="w-full h-full object-contain" />
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out ${
+        scrolled ? 'bg-black backdrop-blur-xl border-b border-white/10 shadow-2xl' : 'bg-black/0 border-b border-transparent'
+      }`}>
+        <nav className={`container mx-auto px-6 flex justify-between items-center transition-all duration-700 ease-in-out ${
+          scrolled ? 'h-20' : 'h-28'
+        }`}>
+          {/* Logo / Left Side */}
+          <div className="flex items-center gap-6">
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="w-14 h-12 flex items-center justify-center overflow-hidden rounded-xl">
+                <img 
+                  src="/images/logo-oficial_shark_dev.png" 
+                  alt="Shark Dev Logo" 
+                  className="w-full h-full object-contain scale-[1.8]" 
+                />
               </div>
-              <span className="text-white font-black text-xl sm:text-2xl tracking-tighter">
-                 SHARK <span className="text-blue-500">DEV</span>
-              </span>
-            </div>
+              <div className="flex flex-col leading-tight">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-primary transition-colors">Shark Dev</span>
+                <span className="text-[8px] font-medium uppercase tracking-[0.2em] text-white/40">Portfolio</span>
+              </div>
+            </Link>
           </div>
 
-          {/* DESKTOP NAV */}
-          <div className="hidden sm:flex items-center h-full">
-            <div className="flex items-center gap-0 h-12 px-2 relative" style={{ minWidth: 'fit-content' }}>
-              {/* SINGLE UFO INDICATOR DESKTOP - Deslizamento ultra suave e lento */}
-              <motion.div
-                key={`ufo-${activeIndex}`}
-                initial={false}
-                className="absolute top-[-16px] z-20 pointer-events-none flex flex-col items-center"
-                animate={{ x: activeIndex * 75 }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 100, 
-                  damping: 20, 
-                  mass: 2 
-                }}
-                style={{ width: 75 }}
-              >
-                <UFOVisual icon={navItems[activeIndex].icon} activeIndex={activeIndex} />
-              </motion.div>
-
-              {navItems.map((item, idx) => {
-                const active = activeIndex === idx;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className="relative flex flex-col items-center justify-center w-[75px] h-full group outline-none pt-8"
-                  >
-                    {/* Ícone que sobe para ser abduzido */}
-                    <motion.div
-                      animate={{ 
-                        y: active ? -32 : 0, 
-                        opacity: active ? 0 : 0.6,
-                        scale: active ? 0.2 : 1,
-                        filter: active ? "brightness(3) drop-shadow(0 0 15px #3b82f6)" : "brightness(1)"
-                      }}
-                      transition={{ 
-                        duration: 0.8,
-                        delay: active ? 0.4 : 0,
-                        ease: [0.34, 1.56, 0.64, 1]
-                      }}
-                      className="text-white"
-                    >
-                      <item.icon size={20} strokeWidth={2} />
-                    </motion.div>
-
-                    {/* Nome que aparece no lugar do ícone quando é abduzido */}
-                    <AnimatePresence>
-                      {active && (
-                        <motion.span
-                          initial={{ opacity: 0, y: 10, scale: 0.5 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -10, scale: 0.5 }}
-                          transition={{ 
-                            delay: 0.6,
-                            duration: 0.4,
-                            ease: "easeOut"
-                          }}
-                          className="absolute text-[10px] font-black uppercase tracking-wider text-blue-400 whitespace-nowrap"
-                        >
-                          {item.name}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </Link>
-                );
-              })}
+          {/* Right Side */}
+          <div className="flex items-center gap-4 lg:gap-6">
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-8 mr-4">
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`text-[10px] font-black uppercase tracking-widest transition-colors ${
+                    location.pathname === item.path ? 'text-primary' : 'text-white/40 hover:text-white'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
             </div>
+
+            <button 
+              onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+              className="flex items-center gap-2 group"
+            >
+              <Globe size={14} className="text-white/40 group-hover:text-primary transition-colors" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">
+                {language === 'pt' ? 'PT' : 'EN'}
+              </span>
+            </button>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              onClick={() => setIsOpen(true)}
+              className="flex lg:hidden items-center gap-3 group"
+            >
+              <div className="w-12 h-12 flex items-center justify-center border border-white/10 group-hover:border-primary transition-colors duration-500">
+                <Menu size={20} className="text-white group-hover:text-primary transition-colors" />
+              </div>
+            </button>
           </div>
         </nav>
       </header>
 
-      {/* MOBILE NAV */}
-      <nav className="sm:hidden fixed top-[90px] left-1/2 -translate-x-1/2 z-[60] w-[95%] max-w-[480px]">
-        <div className="bg-slate-950/90 backdrop-blur-xl border border-blue-500/20 rounded-full px-2 py-3 shadow-2xl relative">
-           <div className="flex justify-around items-center h-10 relative">
-              {/* SINGLE UFO INDICATOR MOBILE - Deslizamento ultra suave e lento */}
-              <motion.div
-                key={`ufo-mobile-${activeIndex}`}
-                initial={false}
-                className="absolute -top-[32px] z-20 pointer-events-none flex flex-col items-center"
-                animate={{ 
-                  left: `${(activeIndex * (100 / navItems.length)) + (50 / navItems.length)}%`
-                }}
-                transition={{ 
-                  left: { 
-                    type: "spring", 
-                    stiffness: 100, 
-                    damping: 20, 
-                    mass: 2 
-                  }
-                }}
-                style={{ transform: "translateX(-50%)", width: 50 }}
-              >
-                <UFOVisual icon={navItems[activeIndex].icon} activeIndex={activeIndex} />
-              </motion.div>
+      {/* Sidebar Navigation */}
+      <div className="lg:hidden">
+        <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100]"
+            />
+            
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-[85vw] md:w-full md:max-w-md bg-black border-l border-white/5 z-[110] p-8 md:p-12 flex flex-col justify-between"
+            >
+              <div className="flex justify-end items-center">
+                
+                <button 
+                  onClick={() => setIsOpen(false)}
+                  className="w-12 h-12 flex items-center justify-center border border-white/10 hover:border-primary transition-colors duration-500 group"
+                >
+                  <X size={20} className="text-white group-hover:text-primary transition-colors" />
+                </button>
+              </div>
 
-              {navItems.map((item, idx) => {
-                const active = activeIndex === idx;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className="relative flex flex-col items-center justify-center w-full h-full outline-none"
+              <nav className="flex flex-col gap-2 my-12">
+                {navItems.map((item, idx) => (
+                  <motion.div
+                    key={item.path}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.1 }}
                   >
-                    {/* Ícone que sobe para ser abduzido */}
-                    <motion.div
-                      animate={{ 
-                        y: active ? -40 : 0, 
-                        opacity: active ? 0 : 0.6,
-                        scale: active ? 0.2 : 1,
-                        filter: active ? "brightness(3) drop-shadow(0 0 15px #3b82f6)" : "brightness(1)"
-                      }}
-                      transition={{ 
-                        duration: 0.8,
-                        delay: active ? 0.4 : 0,
-                        ease: [0.34, 1.56, 0.64, 1]
-                      }}
-                      className="text-white"
+                    <Link
+                      to={item.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none transition-all duration-500 hover:pl-4 ${
+                        location.pathname === item.path ? 'text-primary' : 'text-white/20 hover:text-white'
+                      }`}
                     >
-                      <item.icon size={20} strokeWidth={2} />
-                    </motion.div>
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
 
-                    {/* Nome que aparece no lugar do ícone quando é abduzido */}
-                    <AnimatePresence>
-                      {active && (
-                        <motion.span
-                          initial={{ opacity: 0, y: 10, scale: 0.5 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -10, scale: 0.5 }}
-                          transition={{ 
-                            delay: 0.6,
-                            duration: 0.4,
-                            ease: "easeOut"
-                          }}
-                          className="absolute text-[9px] font-black uppercase tracking-wider text-blue-400 whitespace-nowrap"
-                        >
-                          {item.name}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </Link>
-                );
-              })}
-           </div>
-        </div>
-      </nav>
+              <div className="flex flex-col gap-12">
+                <div className="h-[1px] w-full bg-white/10" />
+                <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                  <div className="flex gap-8">
+                    {socialItems.map((social, i) => (
+                      <a 
+                        key={i} 
+                        href={social.href} 
+                        className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-primary transition-colors duration-500"
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        <social.icon size={20} />
+                      </a>
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/10">Shark Dev Portfólio</span>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+      </div>
     </>
   );
 };
-
-const UFOVisual = ({ icon: Icon, name, activeIndex }: { icon: any, name?: string, activeIndex?: number }) => (
-  <div className="flex flex-col items-center relative">
-    {/* Container da nave que flutua */}
-    <motion.div
-      animate={{ y: [0, -3, 0] }}
-      transition={{
-        repeat: Infinity,
-        duration: 3,
-        ease: "easeInOut"
-      }}
-      className="flex flex-col items-center"
-    >
-      {/* Cúpula do UFO com ícone absorvido - tamanho reduzido */}
-      <div className="w-8 h-5 bg-blue-400/20 backdrop-blur-sm border border-blue-400/30 rounded-t-full flex items-center justify-center overflow-hidden">
-         <motion.div
-           initial={{ y: 20, opacity: 0, scale: 0.5 }}
-           animate={{ y: 0, opacity: 1, scale: 1 }}
-           transition={{ delay: 0.3, duration: 0.4, ease: "easeOut" }}
-         >
-           <Icon size={10} color="#60a5fa" strokeWidth={3} />
-         </motion.div>
-      </div>
-      
-      {/* Base do UFO - Disco com luzes piscantes - tamanho reduzido */}
-      <div className="w-16 h-5 bg-gradient-to-br from-slate-800 to-slate-950 border-x-2 border-b-2 border-slate-700/50 rounded-[100%] shadow-xl flex justify-around items-center px-2 relative z-30">
-         {[1,2,3,4].map(i => (
-            <motion.div 
-              key={i} 
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ repeat: Infinity, duration: 1.5, delay: i * 0.3 }}
-              className="w-1 h-1 bg-blue-500 rounded-full shadow-[0_0_5px_#3b82f6]" 
-            />
-         ))}
-      </div>
-      
-      {/* Feixe de Luz (Tractor Beam) - Acende UMA VEZ por mudança de índice - tamanho ajustado */}
-      <motion.div 
-        key={`beam-${activeIndex}`}
-        initial={{ opacity: 0, scaleY: 0, originY: 0 }}
-        animate={{ 
-          opacity: [0, 1, 0.6, 0],
-          scaleY: [0, 1, 1, 0]
-        }}
-        transition={{ 
-          times: [0, 0.3, 0.7, 1],
-          duration: 1.2,
-          ease: "easeInOut"
-        }}
-        className="w-16 h-[50px] bg-gradient-to-b from-blue-500/40 via-blue-500/20 to-transparent" 
-        style={{ clipPath: "polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)" }}
-      />
-    </motion.div>
-
-    {/* Nome da página - REMOVIDO pois agora aparece no lugar do ícone */}
-  </div>
-);
 
 export default Header;
