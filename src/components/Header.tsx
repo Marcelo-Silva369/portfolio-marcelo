@@ -27,8 +27,8 @@ const Header = () => {
   ];
 
    const socialItems = [
-     { icon: Linkedin, href: 'https://www.linkedin.com/in/shark-dev' },
-     { icon: Instagram, href: 'https://www.instagram.com/shark.dev_369/' },
+     { icon: Linkedin, href: 'https://www.linkedin.com/in/tubarao-dev' },
+     { icon: Instagram, href: 'https://www.instagram.com/tubarao.dev.ofc/' },
      { icon: Youtube, href: 'https://youtube.com/@sharkdev-369?si=pfEhetmjKyGxO4Pg' },
    ];
 
@@ -55,7 +55,7 @@ const Header = () => {
                 />
               </div>
               <div className="flex flex-col leading-tight">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-primary transition-colors">Shark Dev</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-primary transition-colors">Tubarão Dev</span>
                 <span className="text-[8px] font-medium uppercase tracking-[0.2em] text-white/40">Portfolio</span>
               </div>
             </Link>

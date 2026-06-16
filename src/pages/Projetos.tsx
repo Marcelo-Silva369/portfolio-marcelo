@@ -7,52 +7,20 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const projects = [
   {
-    title: 'Formulário',
-    category: 'Web System',
-    description: 'Sistema de cadastro completo e responsivo.',
-    image: '/images/formulario.png',
-    tech: ['HTML', 'CSS'],
-    url: 'https://marcelo-silva369.github.io/Formulario/'
+    title: 'Golden Barber Shop',
+    category: 'Front-end, Back-end, Web+PWA',
+    description: 'Site Desenvolvido para a barbearia de um cliente.',
+    image: '/images/projeto-golden-barbershop.png',
+    tech: ['HTML', 'Tailwind CSS', 'JavaScript', 'React', 'TypeScript', 'PWA', 'Node.js', 'SQL', 'Supabase'],
+    url: 'https://youtu.be/mx2u7tkeZSI?si=muZ0urMfsa7ijgVn'
   },
   {
-    title: 'Jogo-P-P-T',
-    category: 'Game',
-    description: 'Clássico Pedra, Papel e Tesoura interativo.',
-    image: '/images/jogo-pedra-papel-tesoura.png',
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    url: 'https://marcelo-silva369.github.io/Jogo-pedra-papel-tesoura/'
-  },
-  {
-    title: 'Site-Pokédex',
-    category: 'API Integration',
-    description: 'Catálogo dinâmico consumindo PokeAPI.',
-    image: '/images/pokedex.png',
-    tech: ['JS', 'API', 'Avançado'],
-    url: 'https://marcelo-silva369.github.io/pokedex/'
-  },
-  {
-    title: 'List-Supermercado',
-    category: 'Productivity',
-    description: 'Lista de compras inteligente com persistência.',
-    image: '/images/list-supermercado.png',
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    url: 'https://marcelo-silva369.github.io/lista-supermercado/'
-  },
-  {
-    title: 'LandingPage-Hotel',
-    category: 'Landing Page',
-    description: 'Site promocional de alto luxo para hotel.',
-    image: '/images/landingpage-hotel.png',
-    tech: ['HTML', 'CSS', 'Design'],
-    url: 'https://marcelo-silva369.github.io/landing-page-hotel/'
-  },
-  {
-    title: 'Cadastro de Produtos',
-    category: 'Automation',
-    description: 'Automação industrial utilizando Python.',
-    image: '/images/automacao-python.png',
-    tech: ['Python', 'Automação'],
-    url: 'https://youtu.be/obEeJ5uBzvY?si=EWd61LqyqdN5CDKx'
+    title: 'Lux Drinks Barman',
+    category: 'Front-end, Back-end, Web',
+    description: 'Site Desenvolvido para uma empresa de Barman e eventos.',
+    image: '/images/projeto-lux-drinks-barman.png',
+    tech: ['HTML', 'Tailwind CSS', 'JavaScript', 'React', 'TypeScript', 'PWA', 'Node.js', 'SQL', 'Supabase'],
+    url: 'https://youtu.be/dps8_KFPPt0'
   },
   {
     title: 'Dashboard de Vendas',

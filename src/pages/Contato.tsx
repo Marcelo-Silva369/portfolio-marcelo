@@ -11,7 +11,7 @@ const Contato = () => {
   const { t } = useLanguage();
   const contactMethods = [
     { name: "Email", value: "sharkdev369@gmail.com", icon: Mail, href: "mailto:sharkdev369@gmail.com" },
-    { name: "Instagram", value: "@shark.dev_369", icon: Instagram, href: "https://www.instagram.com/shark.dev_369/" },
+    { name: "Instagram", value: "@shark.dev_369", icon: Instagram, href: "https://www.instagram.com/tubarao.dev.ofc/" },
     { name: "WhatsApp", value: "+55 81 98235-6879", icon: FaWhatsapp, href: "https://wa.me/5581982356879" },
   ];
 

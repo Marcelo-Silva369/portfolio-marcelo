@@ -22,7 +22,7 @@ const Footer = () => {
 
           <div className="flex gap-6">
             <a 
-              href="https://www.instagram.com/shark.dev_369/"
+              href="https://www.instagram.com/tubarao.dev.ofc/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-primary transition-colors duration-300"
@@ -30,7 +30,7 @@ const Footer = () => {
               Instagram
             </a>
             <a 
-              href="https://www.linkedin.com/in/shark-dev"
+              href="https://www.linkedin.com/in/tubarao-dev"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-primary transition-colors duration-300"

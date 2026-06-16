@@ -34,7 +34,7 @@ const Hero = () => {
         className="absolute inset-0 z-0 flex items-center justify-center select-none pointer-events-none"
       >
         <h2 className="text-[25vw] md:text-[30vw] font-black uppercase text-white/[0.02] leading-none">
-          SHARK
+          TUBARÃO
         </h2>
       </motion.div>
 

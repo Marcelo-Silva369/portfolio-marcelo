@@ -18,7 +18,7 @@ const translations = {
     'nav.contact': 'Contato',
     'hero.title': 'Marcelo Silva',
     'hero.subtitle': 'Programador',
-    'hero.description': 'Shark Dev. Especialista em criar ecossistemas digitais robustos, unindo performance, escalabilidade e um design de alto nível cinematográfico.',
+    'hero.description': 'Tubarão Dev. Especialista em criar ecossistemas digitais robustos, unindo performance, escalabilidade e um design de alto nível cinematográfico.',
     'hero.cta': 'Explorar Projetos',
     'hero.est': 'EST. 2024',
     'bio.title': 'A Trajetória',
@@ -52,7 +52,7 @@ const translations = {
     'contact.subtitle': 'Vamos',
     'contact.contact': 'Criar algo?',
     'footer.rights': 'Todos os Direitos Reservados',
-    'footer.model': 'Shark Dev Portfólio',
+    'footer.model': 'Tubarão Dev Portfólio',
   },
   en: {
     'nav.home': 'Home',
