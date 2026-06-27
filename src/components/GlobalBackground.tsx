@@ -50,6 +50,6 @@ export const GlobalBackground = () => (
     </Canvas>
     
     {/* Grain Effect Overlay */}
-    <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-20 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+    <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-20 mix-blend-overlay bg-[url('/noise.svg')]" />
   </div>
 );

@@ -3,7 +3,6 @@ import PageTransition from '@/components/PageTransition';
 import { motion } from 'framer-motion';
 
 import Footer from '@/components/Footer';
-import { useLanguage } from '@/context/LanguageContext';
 
 const certificates = [
   {
@@ -73,20 +72,19 @@ const certificates = [
 ];
 
 const Certificados = () => {
-  const { t } = useLanguage();
   
   return (
     <PageTransition>
-      <div className="min-h-screen relative flex flex-col bg-black text-white">
+      <div className="min-h-screen relative flex flex-col bg-[#0C0C0C] text-[#D7E2EA]">
         
         <Header />
       
         <main className="container mx-auto px-6 pt-32 pb-24 relative z-10 flex-grow">
           <div className="flex flex-col gap-4 mb-16">
-            <span className="text-primary text-[11px] font-black uppercase tracking-[0.4em]">{t('certs.title')}</span>
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-black uppercase leading-none tracking-tighter">
-              {t('certs.subtitle')} <br />
-              <span className="text-white/20">{t('certs.certificates')}</span>
+            <span className="text-gradient-red text-[11px] font-black uppercase tracking-[0.4em]">Formação & Certificações</span>
+            <h1 className="hero-heading text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-black uppercase leading-none tracking-tight">
+              Cursos & <br />
+              <span className="text-white/20">Diplomas</span>
             </h1>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl">
@@ -98,19 +96,19 @@ const Certificados = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 onClick={() => cert.pdf && window.open(cert.pdf, '_blank')}
-                className="flex flex-col gap-6 p-6 sm:p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors duration-500 group cursor-pointer"
+                className="flex flex-col gap-6 p-6 sm:p-8 border border-white/10 bg-[#0C0C0C] hover:border-[#64B5F6]/50 group-hover:shadow-[0_0_20px_rgba(100,181,246,0.3)] transition-all duration-500 group cursor-pointer rounded-[25px]"
               >
                 <div className="flex justify-between items-start">
-                  <span className="text-primary text-[10px] font-black uppercase tracking-widest">{cert.date}</span>
-                  <span className="text-[10px] text-white/20 uppercase tracking-widest">{cert.level}</span>
+                  <span className="text-gradient-red text-[10px] font-black uppercase tracking-widest">{cert.date}</span>
+                  <span className="text-[10px] text-gradient-red font-bold uppercase tracking-widest">{cert.level}</span>
                 </div>
                 
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tighter group-hover:text-primary transition-colors duration-500">{cert.title}</h3>
-                  <p className="text-white/40 text-sm font-medium uppercase tracking-widest">{cert.institution}</p>
+                  <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-[#D7E2EA] group-hover:bg-gradient-to-b group-hover:from-white group-hover:to-[#64B5F6] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-500">{cert.title}</h3>
+                  <p className="text-gradient-red text-sm font-medium uppercase tracking-widest">{cert.institution}</p>
                 </div>
 
-                <div className="mt-4 w-12 h-[1px] bg-primary group-hover:w-full transition-all duration-700" />
+                <div className="mt-4 w-12 h-[1px] bg-[#64B5F6] group-hover:w-full transition-all duration-700" />
               </motion.div>
             ))}
           </div>

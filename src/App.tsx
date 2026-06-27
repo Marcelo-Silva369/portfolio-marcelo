@@ -13,7 +13,6 @@ import Curriculo from "./pages/Curriculo";
 import Contato from "./pages/Contato";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
-import { LanguageProvider } from "./context/LanguageContext";
 import { GlobalBackground } from "./components/GlobalBackground";
 
 const queryClient = new QueryClient();
@@ -37,17 +36,15 @@ const AnimatedRoutes = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <GlobalBackground />
-          <ScrollToTop />
-          <AnimatedRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
-    </LanguageProvider>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <GlobalBackground />
+        <ScrollToTop />
+        <AnimatedRoutes />
+      </BrowserRouter>
+    </TooltipProvider>
   </QueryClientProvider>
 );
 
